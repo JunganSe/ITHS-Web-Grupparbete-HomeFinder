@@ -1,6 +1,6 @@
 using System;
 
-namespace HomeFinder.Models
+namespace HomeFinder.ViewModels
 {
     public class ErrorViewModel
     {

@@ -1,4 +1,4 @@
-﻿using HomeFinder.Models;
+﻿using HomeFinder.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
