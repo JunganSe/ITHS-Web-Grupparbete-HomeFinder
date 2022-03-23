@@ -17,6 +17,9 @@ namespace HomeFinder.Models
         public string Description { get; set; }
 
         [Required]
+        public string Summary { get; set; }
+
+        [Required]
         [Display(Name = "Number of Rooms")]
         public int NumberOfRooms { get; set; }
 
@@ -34,7 +37,7 @@ namespace HomeFinder.Models
 
         [Required]
         [Display(Name = "Number of Views")]
-        public int NumberOfViews { get; set; }
+        public int NumberOfViews { get; set; } = 0;
 
         [Required]
         [Display(Name = "Map Url")]

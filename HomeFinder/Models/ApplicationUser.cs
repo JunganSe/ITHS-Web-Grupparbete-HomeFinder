@@ -6,10 +6,12 @@ namespace HomeFinder.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        [RegularExpression(@"^[A-Za-z -]+$")]
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [RegularExpression(@"^[A-Za-z -]+$")]
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
