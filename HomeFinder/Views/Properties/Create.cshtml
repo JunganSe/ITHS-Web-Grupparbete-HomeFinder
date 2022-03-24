@@ -1,4 +1,6 @@
-﻿@model HomeFinder.Models.Property
+﻿@model HomeFinder.ViewModels.PropertyViewModel
+@inject UserManager<ApplicationUser> _usermanager
+
 
 @{
     ViewData["Title"] = "Create";
@@ -13,74 +15,119 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label asp-for="Property.Price" class="control-label"></label>
+                <input asp-for="Property.Price" class="form-control" />
+                <span asp-validation-for="Property.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Property.Description" class="control-label"></label>
+                <input asp-for="Property.Description" class="form-control" />
+                <span asp-validation-for="Property.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfRooms" class="control-label"></label>
-                <input asp-for="NumberOfRooms" class="form-control" />
-                <span asp-validation-for="NumberOfRooms" class="text-danger"></span>
+                <label asp-for="Property.NumberOfRooms" class="control-label"></label>
+                <input asp-for="Property.NumberOfRooms" class="form-control" />
+                <span asp-validation-for="Property.NumberOfRooms" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BuildingArea" class="control-label"></label>
-                <input asp-for="BuildingArea" class="form-control" />
-                <span asp-validation-for="BuildingArea" class="text-danger"></span>
+                <label asp-for="Property.BuildingArea" class="control-label"></label>
+                <input asp-for="Property.BuildingArea" class="form-control" />
+                <span asp-validation-for="Property.BuildingArea" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PlotArea" class="control-label"></label>
-                <input asp-for="PlotArea" class="form-control" />
-                <span asp-validation-for="PlotArea" class="text-danger"></span>
+                <label asp-for="Property.PlotArea" class="control-label"></label>
+                <input asp-for="Property.PlotArea" class="form-control" />
+                <span asp-validation-for="Property.PlotArea" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConstructionYear" class="control-label"></label>
-                <input asp-for="ConstructionYear" class="form-control" />
-                <span asp-validation-for="ConstructionYear" class="text-danger"></span>
+                <label asp-for="Property.ConstructionYear" class="control-label"></label>
+                <input asp-for="Property.ConstructionYear" class="form-control" />
+                <span asp-validation-for="Property.ConstructionYear" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberOfViews" class="control-label"></label>
-                <input asp-for="NumberOfViews" class="form-control" />
-                <span asp-validation-for="NumberOfViews" class="text-danger"></span>
+                <label asp-for="Property.NumberOfViews" class="control-label"></label>
+                <input asp-for="Property.NumberOfViews" class="form-control" />
+                <span asp-validation-for="Property.NumberOfViews" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MapUrl" class="control-label"></label>
-                <input asp-for="MapUrl" class="form-control" />
-                <span asp-validation-for="MapUrl" class="text-danger"></span>
+                <label asp-for="Property.MapUrl" class="control-label"></label>
+                <input asp-for="Property.MapUrl" class="form-control" />
+                <span asp-validation-for="Property.MapUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PublishingDate" class="control-label"></label>
-                <input asp-for="PublishingDate" class="form-control" />
-                <span asp-validation-for="PublishingDate" class="text-danger"></span>
+                <label asp-for="Property.PublishingDate" class="control-label"></label>
+                <input asp-for="Property.PublishingDate" class="form-control" />
+                <span asp-validation-for="Property.PublishingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ViewingDate" class="control-label"></label>
-                <input asp-for="ViewingDate" class="form-control" />
-                <span asp-validation-for="ViewingDate" class="text-danger"></span>
+                <label asp-for="Property.ViewingDate" class="control-label"></label>
+                <input asp-for="Property.ViewingDate" class="form-control" />
+                <span asp-validation-for="Property.ViewingDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adress.Street" class="control-label"></label>
+                <input asp-for="Adress.Street" class="form-control" />
+                <span asp-validation-for="Adress.Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdressId" class="control-label"></label>
-                <select asp-for="AdressId" class ="form-control" asp-items="ViewBag.AdressId"></select>
+                <label asp-for="Adress.StreetNumber" class="control-label"></label>
+                <input asp-for="Adress.StreetNumber" class="form-control" />
+                <span asp-validation-for="Adress.StreetNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adress.PostalCode" class="control-label"></label>
+                <input asp-for="Adress.PostalCode" class="form-control" />
+                <span asp-validation-for="Adress.PostalCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adress.City" class="control-label"></label>
+                <input asp-for="Adress.City" class="form-control" />
+                <span asp-validation-for="Adress.City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropertyTypeId" class="control-label"></label>
-                <select asp-for="PropertyTypeId" class ="form-control" asp-items="ViewBag.PropertyTypeId"></select>
+                <label asp-for="Adress.Country" class="control-label"></label>
+                <input asp-for="Adress.Country" class="form-control" />
+                <span asp-validation-for="Adress.Country" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Property.PropertyTypeId" class="control-label"></label>
+                <select asp-for="Property.PropertyTypeId" class="form-control">
+                    @for (int i = 0; i < Model.PropertyTypes.Count; i++)
+                    {
+                        <option value="@Model.PropertyTypes[i].Id">@Model.PropertyTypes[i].Description</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="TenureId" class="control-label"></label>
-                <select asp-for="TenureId" class ="form-control" asp-items="ViewBag.TenureId"></select>
+                <label asp-for="Property.TenureId" class="control-label"></label>
+                <select asp-for="Property.TenureId" class="form-control">
+                    @for (int i = 0; i < Model.Tenures.Count; i++)
+                    {
+                        <option value="@Model.Tenures[i].Id">@Model.Tenures[i].Description</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="SaleStatusId" class="control-label"></label>
-                <select asp-for="SaleStatusId" class ="form-control" asp-items="ViewBag.SaleStatusId"></select>
+                <label asp-for="Property.SaleStatusId" class="control-label"></label>
+                <select asp-for="Property.SaleStatusId" class="form-control">
+                    @for (int i = 0; i < Model.SaleStatuses.Count; i++)
+                    {
+                        <option value="@Model.SaleStatuses[i].Id">@Model.SaleStatuses[i].Description</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="EstateAgentId" class="control-label"></label>
-                <select asp-for="EstateAgentId" class ="form-control" asp-items="ViewBag.EstateAgentId"></select>
+                <label asp-for="Property.EstateAgentId" class="control-label"></label>
+                <select asp-for="Property.EstateAgentId" class="form-control">
+                    @for (int i = 0; i < Model.EstateAgents.Count; i++)
+                    {
+                        <option value="@Model.EstateAgents[i].Id">@Model.EstateAgents[i].FirstName @Model.EstateAgents[i].LastName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -94,5 +141,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
