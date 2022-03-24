@@ -24,6 +24,10 @@ namespace HomeFinder.ViewModels
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
     }
 }
