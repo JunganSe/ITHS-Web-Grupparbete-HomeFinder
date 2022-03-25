@@ -1,5 +1,4 @@
 ﻿@model HomeFinder.ViewModels.PropertyViewModel
-@inject UserManager<ApplicationUser> _usermanager
 
 
 @{
@@ -41,24 +40,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Property.ConstructionYear" class="control-label"></label>
-                <input asp-for="Property.ConstructionYear" class="form-control" />
+                <input asp-for="Property.ConstructionYear" class="form-control"/>
                 <span asp-validation-for="Property.ConstructionYear" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Property.NumberOfViews" class="control-label"></label>
-                <input asp-for="Property.NumberOfViews" class="form-control" />
-                <span asp-validation-for="Property.NumberOfViews" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Property.MapUrl" class="control-label"></label>
                 <input asp-for="Property.MapUrl" class="form-control" />
                 <span asp-validation-for="Property.MapUrl" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Property.PublishingDate" class="control-label"></label>
-                <input asp-for="Property.PublishingDate" class="form-control" />
-                <span asp-validation-for="Property.PublishingDate" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Property.ViewingDate" class="control-label"></label>
                 <input asp-for="Property.ViewingDate" class="form-control" />

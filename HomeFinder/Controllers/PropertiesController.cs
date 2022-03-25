@@ -71,6 +71,10 @@ namespace HomeFinder.Controllers
         {
             Property newProperty = new();
 
+            newProperty.PublishingDate = DateTime.Now;
+            newProperty.NumberOfViews = 0;
+
+
             if (ModelState.IsValid)
             {
                 Adress newAdress = propertyViewModel.Adress;
@@ -82,6 +86,7 @@ namespace HomeFinder.Controllers
                 
                 newProperty.Adress = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
                 newProperty.AdressId = newProperty.Adress.Id;
+
 
                 _context.Add(newProperty);
                 await _context.SaveChangesAsync();
@@ -99,17 +104,18 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
 
-            var property = await _context.Properties.FindAsync(id);
+            PropertyViewModel propertyViewModel = CreatePropertyViewModel();
+            Property property = await _context.Properties.FindAsync(id);
+
             if (property == null)
             {
                 return NotFound();
             }
-            ViewData["AdressId"] = new SelectList(_context.Adresses, "Id", "City", property.AdressId);
-            ViewData["EstateAgentId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", property.EstateAgentId);
-            ViewData["PropertyTypeId"] = new SelectList(_context.PropertyTypes, "Id", "Description", property.PropertyTypeId);
-            ViewData["SaleStatusId"] = new SelectList(_context.SaleStatuses, "Id", "Description", property.SaleStatusId);
-            ViewData["TenureId"] = new SelectList(_context.Tenures, "Id", "Description", property.TenureId);
-            return View(property);
+
+            propertyViewModel.Property = property;
+            propertyViewModel.Adress = await _context.Adresses.FindAsync(property.AdressId);
+
+            return View(propertyViewModel);
         }
 
         // POST: Properties/Edit/5
@@ -117,18 +123,46 @@ namespace HomeFinder.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Description,NumberOfRooms,BuildingArea,PlotArea,ConstructionYear,NumberOfViews,MapUrl,PublishingDate,ViewingDate,AdressId,PropertyTypeId,TenureId,SaleStatusId,EstateAgentId")] Property property)
+        public async Task<IActionResult> Edit(int id, PropertyViewModel propertyViewModel)
         {
-            if (id != property.Id)
+            if (id != propertyViewModel.Property.Id)
             {
                 return NotFound();
             }
+
+            Property property = new();
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    property = propertyViewModel.Property;
+
+                    Adress adress = _context.Adresses.FirstOrDefault(a=>a.Street == propertyViewModel.Adress.Street &&
+                                                                    a.StreetNumber == propertyViewModel.Adress.StreetNumber &&
+                                                                    a.PostalCode == propertyViewModel.Adress.PostalCode &&
+                                                                    a.City == propertyViewModel.Adress.City &&
+                                                                    a.Country == propertyViewModel.Adress.Country);
+
+                    if(adress != null)
+                    {
+                        property.AdressId = adress.Id;
+                    }
+                    else
+                    {
+                        Adress newAdress = propertyViewModel.Adress;
+                        _context.Adresses.Add(newAdress);
+                        await _context.SaveChangesAsync();
+
+                        property.Adress = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
+                        property.AdressId = property.Adress.Id;
+                    }
+
+
+
+
                     _context.Update(property);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -144,12 +178,8 @@ namespace HomeFinder.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdressId"] = new SelectList(_context.Adresses, "Id", "City", property.AdressId);
-            ViewData["EstateAgentId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", property.EstateAgentId);
-            ViewData["PropertyTypeId"] = new SelectList(_context.PropertyTypes, "Id", "Description", property.PropertyTypeId);
-            ViewData["SaleStatusId"] = new SelectList(_context.SaleStatuses, "Id", "Description", property.SaleStatusId);
-            ViewData["TenureId"] = new SelectList(_context.Tenures, "Id", "Description", property.TenureId);
-            return View(property);
+
+            return View();
         }
 
         // GET: Properties/Delete/5
