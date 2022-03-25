@@ -14,6 +14,7 @@ namespace HomeFinder.Models
         public int StreetNumber { get; set; }
 
         [Required]
+        [RegularExpression(@"^\d{5}$")]
         [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 

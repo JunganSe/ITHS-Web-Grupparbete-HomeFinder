@@ -26,6 +26,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-danger" asp-controller="Seed" asp-action="SeedData">Seed</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Properties" asp-action="Index">Properties List</a>
+                        </li>
 
                         <div class="collapse navbar-collapse justify-content-end">
                             @if (signInManager.IsSignedIn(User))
