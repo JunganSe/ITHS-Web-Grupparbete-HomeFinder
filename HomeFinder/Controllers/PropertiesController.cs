@@ -71,10 +71,6 @@ namespace HomeFinder.Controllers
         {
             Property newProperty = new();
 
-            newProperty.PublishingDate = DateTime.Now;
-            newProperty.NumberOfViews = 0;
-
-
             if (ModelState.IsValid)
             {
                 Adress newAdress = propertyViewModel.Adress;
@@ -82,8 +78,10 @@ namespace HomeFinder.Controllers
                 await _context.SaveChangesAsync();
 
                 newProperty = propertyViewModel.Property;
+                newProperty.PublishingDate = DateTime.Now;
+                newProperty.NumberOfViews = 0;
 
-                
+
                 newProperty.Adress = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
                 newProperty.AdressId = newProperty.Adress.Id;
 

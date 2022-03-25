@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Summary)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NumberOfRooms)
             </th>
             <th>
@@ -58,7 +61,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EstateAgent)
             </th>
-            
+
         </tr>
     </thead>
     <tbody>
@@ -75,6 +78,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfRooms)
@@ -103,7 +109,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Adress.Street) @Html.DisplayFor(modelItem => item.Adress.StreetNumber) <br>
                     @Html.DisplayFor(modelItem => item.Adress.PostalCode) @Html.DisplayFor(modelItem => item.Adress.City)  <br>
-                    @Html.DisplayFor(modelItem => item.Adress.Country) 
+                    @Html.DisplayFor(modelItem => item.Adress.Country)
 
                 </td>
                 <td>
