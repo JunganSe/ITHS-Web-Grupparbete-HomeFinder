@@ -1,4 +1,5 @@
 ﻿using HomeFinder.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,6 +24,8 @@ namespace HomeFinder.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

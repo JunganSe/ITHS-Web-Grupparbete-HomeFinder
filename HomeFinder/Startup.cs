@@ -1,7 +1,9 @@
 using HomeFinder.Data;
 using HomeFinder.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +31,16 @@ namespace HomeFinder
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString")));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>();
+            services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString"))); // Lägg till context för att kunna kommunicera med databasen.
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>(); // Lägg till stöd för Identity-systemet.
+
+            // Ställer custom routes för gemensamma sidor.
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/User/Login");
+                options.AccessDeniedPath = new PathString("/User/AccessDenied");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +61,7 @@ namespace HomeFinder
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); // Används för inloggning med Identity.
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
