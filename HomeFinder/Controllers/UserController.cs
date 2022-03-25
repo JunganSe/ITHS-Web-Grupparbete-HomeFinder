@@ -23,7 +23,14 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: /User/Create
@@ -44,7 +51,7 @@ namespace HomeFinder.Controllers
                 if (result.Succeeded) // Om det gick bra att skapa användaren:
                 {
                     await _signInManager.SignInAsync(user, model.RememberMe);
-                    return RedirectToAction("Index", "Home"); // TODO: Ändra till nåt vettigt.
+                    return RedirectToAction("Index", "Home");
                 }
                 else // Om det inte gick att skapa användaren:
                 {
@@ -63,7 +70,14 @@ namespace HomeFinder.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: /User/Login
@@ -82,7 +96,7 @@ namespace HomeFinder.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home"); // TODO: Ändra till nåt vettigt.
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else // Om det inte gick att logga in:
@@ -96,9 +110,16 @@ namespace HomeFinder.Controllers
 
 
 
+        // GET: /User/Logout
+        [HttpGet]
+        public IActionResult Logout() // Om man försöker nå login via url:
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         // POST: /User/Logout
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(bool? notUsed) // Logout görs med post-request av säkerhetsskäl.
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
@@ -108,9 +129,16 @@ namespace HomeFinder.Controllers
 
         // GET: /User/Settings
         [HttpGet]
-        public async Task<IActionResult> Settings()
+        public IActionResult Settings()
         {
-            return Ok("User settings page goes here.");
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return Ok("User settings page goes here."); // TODO: Gå till användarinställningssida.
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
             
     }

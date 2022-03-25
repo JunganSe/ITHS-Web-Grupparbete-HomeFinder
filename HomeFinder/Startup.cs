@@ -31,9 +31,11 @@ namespace HomeFinder
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString")));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>();
+            services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString"))); // Lägg till context för att kunna kommunicera med databasen.
 
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>(); // Lägg till stöd för Identity-systemet.
+
+            // Ställer custom routes för gemensamma sidor.
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = new PathString("/User/Login");
@@ -59,7 +61,7 @@ namespace HomeFinder
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); // Används för inloggning med Identity.
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
