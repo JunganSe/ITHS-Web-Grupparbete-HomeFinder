@@ -29,8 +29,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Properties" asp-action="Index">Properties List</a>
                         </li>
-
+                        </ul>
                         <div class="collapse navbar-collapse justify-content-end">
+                            <ul class="navbar-nav flex-grow-1">
+
                             @if (signInManager.IsSignedIn(User))
                             {
                                 <li class="nav-item">
@@ -52,8 +54,9 @@
                                     <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
                                 </li>
                             }
+                            </ul>
                         </div>
-                    </ul>
+                    
                 </div>
             </div>
         </nav>
