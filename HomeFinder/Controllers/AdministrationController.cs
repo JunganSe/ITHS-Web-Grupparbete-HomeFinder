@@ -3,6 +3,7 @@ using HomeFinder.Models;
 using HomeFinder.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
@@ -43,7 +44,7 @@ namespace HomeFinder.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("ListRoles", "Administration");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -82,7 +83,7 @@ namespace HomeFinder.Controllers
             };
 
             // Retrieve all the Users
-            foreach (var user in _userManager.Users)
+            foreach (var user in _userManager.Users.ToList())
             {
                 // If the user is in this role, add the username to
                 // Users property of EditRoleViewModel. This model
@@ -124,6 +125,34 @@ namespace HomeFinder.Controllers
                 }
 
                 return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListRoles");
             }
         }
     }
