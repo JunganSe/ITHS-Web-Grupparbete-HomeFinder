@@ -1,33 +1,31 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
 namespace HomeFinder.ViewModels
 {
-    public class CreateUserViewModel
+    public class UserOptionsViewModel
     {
         [Required]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Old password")]
         public string Password { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
-        [Compare("Password")]
-        [Display(Name = "Confirm password")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
 
-        [Display(Name = "Remember me")]
-        public bool RememberMe { get; set; }
+        [DataType(DataType.Password)]
+        [Compare("NewPassword")]
+        [Display(Name = "Confirm new password")]
+        public string ConfirmNewPassword { get; set; }
     }
 }

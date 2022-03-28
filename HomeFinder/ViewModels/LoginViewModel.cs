@@ -5,7 +5,9 @@ namespace HomeFinder.ViewModels
     public class LoginViewModel
     {
         [Required]
-        public string Email { get; set; }
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
