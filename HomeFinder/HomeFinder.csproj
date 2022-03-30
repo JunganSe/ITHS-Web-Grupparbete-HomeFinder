@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="Models\NewFile.txt" />
+    <None Remove="ViewModels\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>

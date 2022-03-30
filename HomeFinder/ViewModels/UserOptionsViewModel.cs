@@ -8,15 +8,16 @@ namespace HomeFinder.ViewModels
         public string Email { get; set; }
 
         [Required]
-        
+        [RegularExpression(@"^[A-Za-z -]+$", ErrorMessage ="Only letters in your First Name, you donkey!")]
         public string FirstName { get; set; }
 
         [Required]
+        [RegularExpression(@"^[A-Za-z -]+$", ErrorMessage = "Only letters in your Last Name, you donkey!")]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Old password")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
