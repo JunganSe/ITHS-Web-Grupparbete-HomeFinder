@@ -1,7 +1,11 @@
-﻿@model IEnumerable<HomeFinder.Models.Property>
+﻿@using HomeFinder.Data
+@model IEnumerable<HomeFinder.Models.Property>
+@inject HomeFinderContext _context
+
 
 @{
     ViewData["Title"] = "Index";
+    var filePath = "/images/";
 }
 
 <h1>Index</h1>
@@ -18,6 +22,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Images
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Summary)
@@ -78,6 +85,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @foreach(var i in _context.Images.Where(a=>a.PropertyId == item.Id))
+                    {
+                        <img src="@(filePath + i.Url)" width="100">
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Summary)

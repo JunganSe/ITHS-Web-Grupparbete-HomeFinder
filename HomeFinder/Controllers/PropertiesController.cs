@@ -9,6 +9,10 @@ using HomeFinder.Data;
 using HomeFinder.Models;
 using HomeFinder.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace HomeFinder.Controllers
 {
@@ -16,11 +20,13 @@ namespace HomeFinder.Controllers
     {
         private readonly HomeFinderContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public PropertiesController(HomeFinderContext context, UserManager<ApplicationUser> userManager)
+        public PropertiesController(HomeFinderContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             _userManager = userManager;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Properties
@@ -58,7 +64,7 @@ namespace HomeFinder.Controllers
         {
 
             PropertyViewModel propertyViewModel = CreatePropertyViewModel();
-              
+
             return View(propertyViewModel);
         }
 
@@ -88,7 +94,32 @@ namespace HomeFinder.Controllers
 
                 _context.Add(newProperty);
                 await _context.SaveChangesAsync();
+
+
+                string uniqueFileName = null;
+                if (propertyViewModel.Images != null)
+                {
+                    foreach (var i in propertyViewModel.Images)
+                    {
+                        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + i.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        i.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                        _context.Images.Add(new Image
+                        {
+                            Url = uniqueFileName,
+                            PropertyId = newProperty.Id
+                            
+                        });
+                        await _context.SaveChangesAsync();
+                    }
+
+                }
+
+
                 return RedirectToAction(nameof(Index));
+
             }
 
             return View();
@@ -136,13 +167,13 @@ namespace HomeFinder.Controllers
                 {
                     property = propertyViewModel.Property;
 
-                    Adress adress = _context.Adresses.FirstOrDefault(a=>a.Street == propertyViewModel.Adress.Street &&
+                    Adress adress = _context.Adresses.FirstOrDefault(a => a.Street == propertyViewModel.Adress.Street &&
                                                                     a.StreetNumber == propertyViewModel.Adress.StreetNumber &&
                                                                     a.PostalCode == propertyViewModel.Adress.PostalCode &&
                                                                     a.City == propertyViewModel.Adress.City &&
                                                                     a.Country == propertyViewModel.Adress.Country);
 
-                    if(adress != null)
+                    if (adress != null)
                     {
                         property.AdressId = adress.Id;
                     }
@@ -224,12 +255,12 @@ namespace HomeFinder.Controllers
         {
             PropertyViewModel propertyViewModel = new();
 
-            propertyViewModel.SaleStatuses = _context.SaleStatuses.Where(a=>a.Description!=null).ToList();
-            propertyViewModel.Tenures = _context.Tenures.Where(a=>a.Description!=null).ToList();
-            propertyViewModel.PropertyTypes = _context.PropertyTypes.Where(a=>a.Description!=null).ToList();
+            propertyViewModel.SaleStatuses = _context.SaleStatuses.Where(a => a.Description != null).ToList();
+            propertyViewModel.Tenures = _context.Tenures.Where(a => a.Description != null).ToList();
+            propertyViewModel.PropertyTypes = _context.PropertyTypes.Where(a => a.Description != null).ToList();
 
             //TODO: Lägg till att bara mäklare ska dyka upp i listan nedan!
-            propertyViewModel.EstateAgents = _userManager.Users.Where(a=>a.UserName !=null).ToList();
+            propertyViewModel.EstateAgents = _userManager.Users.Where(a => a.UserName != null).ToList();
 
 
             return propertyViewModel;
