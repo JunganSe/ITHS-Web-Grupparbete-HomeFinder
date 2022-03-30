@@ -1,19 +1,19 @@
-﻿@using HomeFinder.Data
-@model HomeFinder.ViewModels.PropertyViewModel
-@inject HomeFinderContext _context
+﻿@model HomeFinder.ViewModels.PropertyViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
+
 
 <h4>Property</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form enctype="multipart/form-data" asp-action="Create">
+        <form asp-controller="EstateAgentOptions" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Property.Id" />
             <div class="form-group">
                 <label asp-for="Property.Price" class="control-label"></label>
                 <input asp-for="Property.Price" class="form-control" />
@@ -43,6 +43,18 @@
                 <label asp-for="Property.PlotArea" class="control-label"></label>
                 <input asp-for="Property.PlotArea" class="form-control" />
                 <span asp-validation-for="Property.PlotArea" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" hidden>
+                <label asp-for="Property.NumberOfViews" class="control-label"></label>
+                <input asp-for="Property.NumberOfViews" class="form-control" />
+                <span asp-validation-for="Property.NumberOfViews" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" hidden>
+                <label asp-for="Property.PublishingDate" class="control-label"></label>
+                <input asp-for="Property.PublishingDate" class="form-control" />
+                <span asp-validation-for="Property.PublishingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Property.ConstructionYear" class="control-label"></label>
@@ -89,7 +101,6 @@
                 <input asp-for="Adress.Country" class="form-control" />
                 <span asp-validation-for="Adress.Country" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Property.PropertyTypeId" class="control-label"></label>
                 <select asp-for="Property.PropertyTypeId" class="form-control">
@@ -126,18 +137,8 @@
                     }
                 </select>
             </div>
-            <div class="form-group row">
-                <label asp-for="Images" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="custom-file">
-                        <input asp-for="Images" class="form-control custom-file-input">
-                        <label class="custom-file-label">Choose File...</label>
-                    </div>
-                </div>
-            </div>
-
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -148,16 +149,5 @@
 </div>
 
 @section Scripts {
-    @{
-        <script>
-            $(document).ready(function () {
-                $('.custom-file-input').on("change", function () {
-                    var fileName = $(this).val().split("\\").pop();
-                    $(this).next('.custom-file-label').html(fileName);
-                });
-            });
-        </script>
-
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
