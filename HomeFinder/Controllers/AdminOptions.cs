@@ -29,51 +29,91 @@ namespace HomeFinder.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> EditUser(string id)
         {
-            if (!_signInManager.IsSignedIn(User))
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
             {
-                return View();
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            // GetClaimsAsync retunrs the list of user Claims
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            // GetRolesAsync returns the list of user Roles
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = userRoles
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
+                return View("NotFound");
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
             }
         }
-
-        //Samma metod som i UserController för att skapa användare
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
-            {
-                var user = new ApplicationUser()
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
+            var user = await _userManager.FindByIdAsync(id);
 
-                if (result.Succeeded) // Om det gick bra att skapa användaren:
-                {
-                    if(_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {
-                        return RedirectToAction("ListUsers", "AdminOptions");
-                    }
-                    await _signInManager.SignInAsync(user, model.RememberMe);
-                    return RedirectToAction("Index", "Home");
-                }
-                else // Om det inte gick att skapa användaren:
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                }
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
             }
-            return View(model);
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("ListUsers");
+            }
         }
     }
 }
+
