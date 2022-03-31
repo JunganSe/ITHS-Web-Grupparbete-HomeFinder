@@ -15,16 +15,15 @@
 <div class="row">
     @foreach (var property in Model.Properties)
     {
-        //if (property.SaleStatusId == 3) // TODO: Se om det går att göra kontrollen på ett bättre sätt. (3 = For sale)
         if (property.SaleStatusId == Model.SaleStatuses["For sale"])
-        {
+        { 
+            // TODO: Lägg in rätt bild 4 rader ner.
             <div class="col-4">
                 <div class="card mb-3">
-
                     <div class="card-header">
-                        <img src="~/images/bootyfulhouse.png" alt="bild ju!" style="width:100%"> @* TODO: lägg in rätt bild. *@
+                        <img src="~/images/bootyfulhouse.png" alt="bild ju!" style="width:100%">
                     </div>
-
+                    
                     <div class="card-body">
                         <h2>@property.Adress.Street @property.Adress.StreetNumber, @property.Adress.City</h2>
                         <p>@property.Summary</p>
