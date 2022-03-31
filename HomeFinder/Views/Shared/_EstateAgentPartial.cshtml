@@ -4,13 +4,20 @@
 
 <ul class="navbar-nav flex-grow-1">
 
+    <!-- Det är den gröna koden som ska in, men när det inte finns några roller så syns den inte och då kan vi inte redigera :P -->
 
-    @if (User != null)
-    {
+    @*    @if (User.IsInRole("EstateAgent"))
+        {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action="ShowProperties" asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.Email == User.Identity.Name).Id">My properties</a>
+        <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action="ShowProperties" asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.Email == User.Identity.Name).Id">My properties</a>
         </li>
-    }
+        }*@
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action="ShowProperties">My properties</a>
+    </li>
+
+
     <li class="nav-item">
         <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action=""> </a>
     </li>
