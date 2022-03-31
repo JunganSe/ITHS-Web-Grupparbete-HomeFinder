@@ -60,24 +60,25 @@ namespace HomeFinder.Controllers
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.Email = model.Email;
+                    ViewData["Message"] = "Yur stuuf is updaet.";
                     if (!string.IsNullOrEmpty(model.NewPassword)) // Om ett nytt lösenord har fyllts i:
                     {
                         await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+                        ViewData["Message"] += " Paiswor is updaet.";
                     }
-                    ViewData["Message"] = "Yur stuuf is updaet.";
+                    await _userManager.UpdateAsync(user); // Skicka in ändringarna i databasen.
                 }
                 else
                 {
                     ViewData["Message"] = "Wrong password.";
                 }
-                await _userManager.UpdateAsync(user); // Skicka in ändringarna i databasen.
             }
             else
             {
                 ViewData["Message"] = "Incorrect input.";
             }
 
-            return View("Index");
+            return View();
         }
 
 
@@ -88,6 +89,20 @@ namespace HomeFinder.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
+            // Troligtvis överkomplicerat sätt att hämta möjliga värden för SaleStatus ur databasen och skicka dem till view i en dictionary.
+            var ids = _context.SaleStatuses
+                .Select(s => s.Id)
+                .ToList();
+            var descriptions = _context.SaleStatuses
+                .Select(s => s.Description)
+                .ToList();
+            Dictionary<string, int> saleStatuses = new();
+            for (int i = 0; i < ids.Count; i++)
+            {
+                saleStatuses.Add(descriptions[i], ids[i]);
+            }
+
+            // Hämta en lista med id på de properties som användaren intresseanmält.
             var propertyIds = _context.ExpressionOfInterests // Titta i kopplingstabellen.
                 .Where(e => e.ApplicationUserId == user.Id) // Ta bara de rader med rätt användar-id.
                 .Select(e => e.PropertyId) // Hämta property-id från de raderna.
@@ -95,7 +110,9 @@ namespace HomeFinder.Controllers
             
             var model = new DisplayExpressionOfInterestsViewModel()
             {
-                // Hämta alla properties vars id finns i propertyId-listan.
+                SaleStatuses = saleStatuses,
+
+                // Hämta alla properties vars id finns i propertyIds-listan.
                 Properties = _context.Properties
                     .Include(p => p.Adress)
                     .ToList()

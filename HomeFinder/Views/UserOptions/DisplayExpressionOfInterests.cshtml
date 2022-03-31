@@ -6,10 +6,17 @@
 
 <h1>Expression of Interests</h1>
 
+@if (!Model.Properties.Any())
+{
+    <p>No expression of interests yet.</p>
+}
+<a class="btn btn-warning mb-3" asp-controller="UserOptions" asp-action="Index">Back</a>
+
 <div class="row">
     @foreach (var property in Model.Properties)
     {
-        if (property.SaleStatusId == 3) // TODO: Se om det går att göra kontrollen på ett bättre sätt. (3 = For sale)
+        //if (property.SaleStatusId == 3) // TODO: Se om det går att göra kontrollen på ett bättre sätt. (3 = For sale)
+        if (property.SaleStatusId == Model.SaleStatuses["For sale"])
         {
             <div class="col-4">
                 <div class="card mb-3">

@@ -45,6 +45,7 @@
 
             <div asp-validation-summary="All" class="text-danger"></div>
 
+            <a class="btn btn-warning" asp-controller="UserOptions" asp-action="Index">Back</a>
             <button type="submit" class="btn btn-primary">Update</button>
 
             @ViewData["Message"]?.ToString()
