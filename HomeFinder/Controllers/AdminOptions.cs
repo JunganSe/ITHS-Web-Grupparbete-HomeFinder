@@ -39,9 +39,7 @@ namespace HomeFinder.Controllers
                 return View("NotFound");
             }
 
-            // GetClaimsAsync retunrs the list of user Claims
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            // GetRolesAsync returns the list of user Roles
+            // GetRolesAsync returnerar en lista av UserRoles
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var model = new EditUserViewModel
