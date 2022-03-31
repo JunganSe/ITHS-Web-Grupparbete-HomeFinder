@@ -33,9 +33,6 @@
                         </li>
 
                         <li>
-                            <partial name="_UserPartial" />
-                        </li>
-                        <li>
                             <partial name="_AdminPartial" />
                         </li>
                         <li>
@@ -68,7 +65,7 @@
                                                 <!-- Modal body -->
                                               <div class="modal-body">
                                                     @* Formulär för att få logout att bli en html-post (av säkerhetsskäl). *@
-                                                   <form method="post" asp-controller="User" asp-action="Logout">
+                                                   <form method="post" asp-controller="Account" asp-action="Logout">
                                                         <button type="submit" class="btn btn-primary">Yes</button>
                                                     </form>  
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">No!</button>
@@ -82,13 +79,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                            @* Formulär för att få logout att bli en html-post (av säkerhetsskäl). *@
-                                    <form method="post" asp-controller="Account" asp-action="Logout">
-                                        <button type="submit" class="nav-link text-dark btn btn-link">Logout</button>
-                                    </form>
                                 </li>
                                 <li>
-                                    <a asp-controller="Account" asp-action="Settings" class="nav-link text-dark">@User.Identity.Name</a>
+                                    <partial name="_UserPartial" />
                                 </li>
                             }
                             else
