@@ -71,30 +71,30 @@ namespace HomeFinder.Controllers
             await _context.Adresses.AddRangeAsync(adresses);
 
             string password = "Test123!";
-            var applicationUser = new ApplicationUser
+            var applicationUser1 = new ApplicationUser
+            {
+                FirstName = "testarn",
+                LastName = "testarnsson",
+                Email = "test@test",
+                UserName = "test@test"
+            };
+            await _userManager.CreateAsync(applicationUser1, password);
+
+            var applicationUser2 = new ApplicationUser
             {
                 FirstName = "Micke",
                 LastName = "Med kaffet",
                 Email = "ork@a.va",
                 UserName = "ork@a.va"
             };
-            await _userManager.CreateAsync(applicationUser, password);
+            await _userManager.CreateAsync(applicationUser2, password);
 
-            var applicationUser2 = new ApplicationUser
+            var applicationUser3 = new ApplicationUser
             {
                 FirstName = "Tommy",
                 LastName = "Tomtefar",
                 Email = "Tompa@tompasventilation.se",
                 UserName = "Tompa@tompasventilation.se"
-            };
-            await _userManager.CreateAsync(applicationUser2, password);
-
-            var applicationUser3 = new ApplicationUser
-            {
-                FirstName = "testarn",
-                LastName = "testarnsson",
-                Email = "test@test",
-                UserName = "test@test"
             };
             await _userManager.CreateAsync(applicationUser3, password);
 
