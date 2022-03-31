@@ -1,0 +1,40 @@
+﻿@model DisplayExpressionOfInterestsViewModel
+
+@{
+    ViewData["Title"] = "Expression of Interests";
+}
+
+<h1>Expression of Interests</h1>
+
+@if (!Model.Properties.Any())
+{
+    <p>No expression of interests yet.</p>
+}
+<a class="btn btn-warning mb-3" asp-controller="UserOptions" asp-action="Index">Back</a>
+
+<div class="row">
+    @foreach (var property in Model.Properties)
+    {
+        if (property.SaleStatusId == Model.SaleStatuses["For sale"])
+        { 
+            // TODO: Lägg in rätt bild 4 rader ner.
+            <div class="col-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <img src="~/images/bootyfulhouse.png" alt="bild ju!" style="width:100%">
+                    </div>
+                    
+                    <div class="card-body">
+                        <h2>@property.Adress.Street @property.Adress.StreetNumber, @property.Adress.City</h2>
+                        <p>@property.Summary</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary">Details</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    }
+</div>

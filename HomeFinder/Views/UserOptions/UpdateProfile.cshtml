@@ -1,0 +1,59 @@
+﻿@model UserOptionsViewModel
+
+@{
+    ViewData["Title"] = "Update Profile";
+}
+
+<h1>Welcome, @User.Identity.Name</h1>
+
+<h2>Update Account Settings</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="UserOptions" asp-action="UpdateProfile">
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+            </div>
+           
+
+            <div class="form-group">
+                <label asp-for="NewPassword"></label>
+                <input asp-for="NewPassword" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmNewPassword"></label>
+                <input asp-for="ConfirmNewPassword" class="form-control" />
+            </div>
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <a class="btn btn-warning" asp-controller="UserOptions" asp-action="Index">Back</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+
+            @ViewData["Message"]?.ToString()
+
+        </form>
+
+    </div>
+</div>
+
+@* Aktivera validering på klientsidan. *@
+@section Scripts {  <partial name="_ValidationScriptsPartial" /> }

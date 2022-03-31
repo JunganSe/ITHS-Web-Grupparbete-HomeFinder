@@ -12,10 +12,12 @@ namespace HomeFinder.Controllers
     public class SeedController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly HomeFinderContext _context;
-        public SeedController(HomeFinderContext context, UserManager<ApplicationUser> userManager)
+        public SeedController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, HomeFinderContext context)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
 
@@ -68,31 +70,39 @@ namespace HomeFinder.Controllers
             };
             await _context.Adresses.AddRangeAsync(adresses);
 
-            var applicationUser = new ApplicationUser
-            {
-                FirstName = "Testarn",
-                LastName = "Testarnsson",
-                Email = "test@test.com",
-                UserName = "test@test.com"
-            };
             string password = "Test123!";
-            await _userManager.CreateAsync(applicationUser, password);
-
             var applicationUser1 = new ApplicationUser
+            {
+                FirstName = "testarn",
+                LastName = "testarnsson",
+                Email = "test@test",
+                UserName = "test@test"
+            };
+            await _userManager.CreateAsync(applicationUser1, password);
+
+            var applicationUser2 = new ApplicationUser
+            {
+                FirstName = "Micke",
+                LastName = "Med kaffet",
+                Email = "ork@a.va",
+                UserName = "ork@a.va"
+            };
+            await _userManager.CreateAsync(applicationUser2, password);
+
+            var applicationUser3 = new ApplicationUser
             {
                 FirstName = "Tommy",
                 LastName = "Tomtefar",
                 Email = "Tompa@tompasventilation.se",
                 UserName = "Tompa@tompasventilation.se"
             };
-            string password1 = "Test123!";
-            await _userManager.CreateAsync(applicationUser1, password1);
+            await _userManager.CreateAsync(applicationUser3, password);
 
             List<SaleStatus> saleStatuses = new()
             {
+                new SaleStatus { Description = "Sold"},
                 new SaleStatus { Description = "For sale"},
-                new SaleStatus { Description = "Not for sale"},
-                new SaleStatus { Description = "Sold"}
+                new SaleStatus { Description = "Not for sale"}
             };
             await _context.SaleStatuses.AddRangeAsync(saleStatuses);
 
@@ -130,10 +140,10 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FirstOrDefaultAsync(a => a.City != null),
-                    PropertyType = await _context.PropertyTypes.FirstOrDefaultAsync(p => p.Description != null),
-                    Tenure = await _context.Tenures.FirstOrDefaultAsync(t => t.Description != null),
-                    SaleStatus = await _context.SaleStatuses.FirstOrDefaultAsync(s => s.Description != null),
+                    Adress = await _context.Adresses.FindAsync(1),
+                    PropertyType = await _context.PropertyTypes.FindAsync(2),
+                    Tenure = await _context.Tenures.FindAsync(2),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(2),
                     EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
                 },
                 new Property()
@@ -148,10 +158,10 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(3),
+                    Adress = await _context.Adresses.FindAsync(2),
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(3),
-                    SaleStatus = await _context.SaleStatuses.FindAsync(1),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(2),
                     EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
                 },
                 new Property()
@@ -166,19 +176,57 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(2),
+                    Adress = await _context.Adresses.FindAsync(3),
                     PropertyType = await _context.PropertyTypes.FindAsync(6),
                     Tenure = await _context.Tenures.FindAsync(1),
-                    SaleStatus = await _context.SaleStatuses.FindAsync(1),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(2),
+                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                },
+                new Property()
+                {
+                    Price = 10000000m,
+                    Description = "Koja på taket med soltak och kompost i sovrummet.",
+                    Summary = "Casa de Karlsson.",
+                    NumberOfRooms = 1,
+                    BuildingArea = 12,
+                    PlotArea = 200000,
+                    ConstructionYear = 1949,
+                    MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
+                    PublishingDate = DateTime.Now,
+                    ViewingDate = DateTime.Now,
+                    Adress = await _context.Adresses.FindAsync(4),
+                    PropertyType = await _context.PropertyTypes.FindAsync(2),
+                    Tenure = await _context.Tenures.FindAsync(2),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(3),
                     EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
                 },
             };
-            
             await _context.Properties.AddRangeAsync(properties);
-
             await _context.SaveChangesAsync();
 
-            return Ok();
+            List<ExpressionOfInterest> expressionOfInterests = new()
+            {
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    Property = await _context.Properties.FindAsync(1)
+                },
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    Property = await _context.Properties.FindAsync(2)
+                },
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    Property = await _context.Properties.FindAsync(3)
+                }
+            };
+            await _context.ExpressionOfInterests.AddRangeAsync(expressionOfInterests);
+            await _context.SaveChangesAsync();
+
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

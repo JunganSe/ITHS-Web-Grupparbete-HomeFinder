@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\UserOptions.cs" />
     <Compile Remove="Data\HomeBuilderContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\NewFile.txt" />
+    <None Remove="ViewModels\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>

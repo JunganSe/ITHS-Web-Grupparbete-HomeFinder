@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
-    public class UserController : Controller
+    public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -35,7 +35,7 @@ namespace HomeFinder.Controllers
 
         // POST: /User/Create
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
+        public async Task<IActionResult> Create(CreateAccountModel model)
         {
             if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
@@ -47,7 +47,7 @@ namespace HomeFinder.Controllers
                     LastName = model.LastName
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-
+                
                 if (result.Succeeded) // Om det gick bra att skapa användaren:
                 {
                     await _signInManager.SignInAsync(user, model.RememberMe);
@@ -85,7 +85,8 @@ namespace HomeFinder.Controllers
         {
             if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                
 
                 if(result.Succeeded) // Om det gick bra att logga in:
                 {
@@ -123,22 +124,6 @@ namespace HomeFinder.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }
-
-
-
-        // GET: /User/Settings
-        [HttpGet]
-        public IActionResult Settings()
-        {
-            if (!_signInManager.IsSignedIn(User))
-            {
-                return Ok("User settings page goes here."); // TODO: Gå till användarinställningssida.
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
         }
             
     }

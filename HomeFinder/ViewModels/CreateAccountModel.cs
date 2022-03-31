@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace HomeFinder.ViewModels
 {
-    public class CreateUserViewModel
+    public class CreateAccountModel
     {
         [Required]
         [EmailAddress]
