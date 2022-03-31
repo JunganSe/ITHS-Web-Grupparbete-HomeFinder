@@ -1,5 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using HomeFinder.Data
+@inject HomeFinderContext _context
+
+
+<ul class="navbar-nav flex-grow-1">
+
+
+    @if (User != null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action="ShowProperties" asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.Email == User.Identity.Name).Id">My properties</a>
+        </li>
+    }
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="EstateAgentOptions" asp-action=""> </a>
+    </li>
+</ul>
