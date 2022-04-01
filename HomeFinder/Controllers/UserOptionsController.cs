@@ -53,19 +53,35 @@ namespace HomeFinder.Controllers
             if(ModelState.IsValid)
             {
                 // Om lösenordet har fyllts i korrekt:
-                if ((!string.IsNullOrEmpty(model.Password))
-                    && (await _userManager.CheckPasswordAsync(user, model.Password)))
+                if (await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    // Hämta uppgifter från formuläret och lägg dem i användarens data.
+                    if (model.Email == user.Email && model.FirstName == user.FirstName && model.LastName == user.LastName &&
+                        string.IsNullOrEmpty(model.NewPassword))
+                    {
+
+                        ViewData["Message"] = "No Changes";
+                        return View();
+                    }
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.Email = model.Email;
                     ViewData["Message"] = "Yur stuuf is updaet.";
+
+                    // Hämta uppgifter från formuläret och lägg dem i användarens data.
                     if (!string.IsNullOrEmpty(model.NewPassword)) // Om ett nytt lösenord har fyllts i:
                     {
-                        await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
-                        ViewData["Message"] += " Paiswor is updaet.";
-                    }
+                        //kontrollerar att nya lösenordet uppfyller kraven
+                        var result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+                        if (result.Succeeded == true)
+                        {
+                            ViewData["Message"] += " Paiswor is updaet.";
+                        }
+                        else
+                        {
+                            ViewData["Message"] = "New Password is WEAK. Just like you.";
+                            return View();                           
+                        }
+                    }                   
                     await _userManager.UpdateAsync(user); // Skicka in ändringarna i databasen.
                 }
                 else
@@ -75,9 +91,8 @@ namespace HomeFinder.Controllers
             }
             else
             {
-                ViewData["Message"] = "Incorrect input.";
+                ViewData["Message"] = "Incorrect Input";
             }
-
             return View();
         }
 
