@@ -9,7 +9,7 @@
 @if (Model.Any())
 {
     <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
-       asp-controller="administration">Add new role</a>
+       asp-controller="AdminOptions">Add new role</a>
 
     foreach (var role in Model)
     {
@@ -22,7 +22,7 @@
             </div>
             <div class="card-footer">
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
-                    <a class="btn btn-primary" asp-action="EditRole" asp-controller="Administration" asp-route-id="@role.Id">Edit</a>
+                    <a class="btn btn-primary" asp-action="EditRole" asp-controller="AdminOptions" asp-route-id="@role.Id">Edit</a>
                     
                     <span id="confirmDeleteSpan_@role.Id" style="display:none">
                         <span>Are you sure you want to delete?</span>
@@ -51,7 +51,7 @@ else
                 Use the button below to create a role
             </h5>
             <a class="btn btn-primary" style="width:auto"
-               asp-controller="administration" asp-action="CreateRole">
+               asp-controller="AdminOptions" asp-action="CreateRole">
                 Create Role
             </a>
         </div>

@@ -1,1 +1,13 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="form-group row">
+    <div class="col-sm-10">
+        <a asp-action="ListUsers" class="btn btn-primary">Users page</a>
+        <a asp-action="ListRoles" class="btn btn-primary">Roles page</a>
+        <a asp-action="Index" asp-controller="Properties" class="btn btn-primary">Properties page</a>
+    </div>
+</div>
