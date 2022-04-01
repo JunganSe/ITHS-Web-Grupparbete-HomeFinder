@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
-    public class EstateAgentOptions : Controller
+    public class EstateAgentOptionsController : Controller
     {
 
         private readonly HomeFinderContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public EstateAgentOptions(HomeFinderContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment)
+        public EstateAgentOptionsController(HomeFinderContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             _userManager = userManager;
