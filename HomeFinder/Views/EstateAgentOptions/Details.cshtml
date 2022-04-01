@@ -1,128 +1,134 @@
 ﻿@using HomeFinder.Data
-@model HomeFinder.Models.Property
+@model HomeFinder.ViewModels.PropertyViewModel
 @inject HomeFinderContext _context
 
 
 @{
     ViewData["Title"] = "Details";
-    var id = Model.Id;
+    var id = Model.Property.Id;
 }
 
 <h1>Details</h1>
 
 <div>
     <h4>Property</h4>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
-    <a asp-controller="ExpressionOfInterest" asp-action="Add" asp-route-id="@Model.Id">&#9829;</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Property.Id">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.Property.Id">Delete</a> |
+    <a asp-controller="ExpressionOfInterest" asp-action="Add" asp-route-id="@Model.Property.Id">&#9829;</a> |
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Property.Price)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Property.Price)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Property.Description)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Property.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Summary)
+            @Html.DisplayNameFor(model => model.Property.Summary)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Summary)
+            @Html.DisplayFor(model => model.Property.Summary)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfRooms)
+            @Html.DisplayNameFor(model => model.Property.NumberOfRooms)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfRooms)
+            @Html.DisplayFor(model => model.Property.NumberOfRooms)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BuildingArea)
+            @Html.DisplayNameFor(model => model.Property.BuildingArea)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BuildingArea)
+            @Html.DisplayFor(model => model.Property.BuildingArea)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PlotArea)
+            @Html.DisplayNameFor(model => model.Property.PlotArea)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PlotArea)
+            @Html.DisplayFor(model => model.Property.PlotArea)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ConstructionYear)
+            @Html.DisplayNameFor(model => model.Property.ConstructionYear)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ConstructionYear)
+            @Html.DisplayFor(model => model.Property.ConstructionYear)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumberOfViews)
+            @Html.DisplayNameFor(model => model.Property.NumberOfViews)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumberOfViews)
+            @Html.DisplayFor(model => model.Property.NumberOfViews)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MapUrl)
+            @Html.DisplayNameFor(model => model.Property.MapUrl)
         </dt>
         <dd class="col-sm-10">
 
-            <iframe src="@Model.MapUrl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="@Model.Property.MapUrl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PublishingDate)
+            @Html.DisplayNameFor(model => model.Property.PublishingDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PublishingDate)
+            @Html.DisplayFor(model => model.Property.PublishingDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ViewingDate)
+            @Html.DisplayNameFor(model => model.Property.ViewingDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ViewingDate)
+            @Html.DisplayFor(model => model.Property.ViewingDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adress)
+            @Html.DisplayNameFor(model => model.Property.Adress)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adress.City)
+            @Html.DisplayFor(model => model.Property.Adress.City)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PropertyType)
+            @Html.DisplayNameFor(model => model.Property.PropertyType)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PropertyType.Description)
+            @Html.DisplayFor(model => model.Property.PropertyType.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Tenure)
+            @Html.DisplayNameFor(model => model.Property.Tenure)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Tenure.Description)
+            @Html.DisplayFor(model => model.Property.Tenure.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SaleStatus)
+            @Html.DisplayNameFor(model => model.Property.SaleStatus)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SaleStatus.Description)
+            @Html.DisplayFor(model => model.Property.SaleStatus.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EstateAgent)
+            @Html.DisplayNameFor(model => model.Property.EstateAgent)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EstateAgent.FirstName) @Html.DisplayFor(model => model.EstateAgent.LastName)
+            @Html.DisplayFor(model => model.Property.EstateAgent.FirstName) @Html.DisplayFor(model => model.Property.EstateAgent.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpressionOfInterests)
+            @Html.DisplayNameFor(model => model.Property.ExpressionOfInterests)
         </dt>
         <dd class="col-sm-10">
-            @foreach (var e in _context.ExpressionOfInterests.Where(e => e.PropertyId == id))
+            <ul>
+            @foreach (var e in Model.ExpressionsOfInterest.Where(e => e.PropertyId == id))
             {
-                <p>@e.ApplicationUserId</p>
+                <li>
+                <p>@_context.ApplicationUsers.FirstOrDefault(u=>u.Id == e.ApplicationUserId).FirstName
+                    @_context.ApplicationUsers.FirstOrDefault(u=>u.Id == e.ApplicationUserId).LastName
+                </p>
+                </li>
             }
+            </ul>
 
         </dd>
     </dl>
@@ -131,3 +137,8 @@
 
     <a asp-action="Index">Back to List</a>
 </div>
+
+<br />
+<br />
+<br />
+<br />
