@@ -64,8 +64,11 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+            PropertyViewModel propertyViewModel = new();
+            propertyViewModel.Property = property;
+            propertyViewModel.ExpressionsOfInterest = _context.ExpressionOfInterests.ToList();
 
-            return View(property);
+            return View(propertyViewModel);
         }
 
 

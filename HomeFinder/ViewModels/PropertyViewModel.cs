@@ -14,6 +14,7 @@ namespace HomeFinder.ViewModels
         public List<PropertyType> PropertyTypes { get; set; }
         public List<ApplicationUser> EstateAgents { get; set; }
         public List<IFormFile> Images { get; set; }
+        public List<ExpressionOfInterest> ExpressionsOfInterest { get; set; }
 
     }
 }
