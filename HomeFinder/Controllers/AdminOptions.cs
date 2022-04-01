@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
-    public class AdminOptions : Controller
+    public class AdminOptionsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AdminOptions(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AdminOptionsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
