@@ -13,11 +13,16 @@ namespace HomeFinder.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly HomeFinderContext _context;
-        public SeedController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, HomeFinderContext context)
+        public SeedController(UserManager<ApplicationUser> userManager, 
+                                SignInManager<ApplicationUser> signInManager, 
+                                RoleManager<IdentityRole> roleManager, 
+                                HomeFinderContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _context = context;
         }
 
@@ -33,6 +38,123 @@ namespace HomeFinder.Controllers
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.MigrateAsync();
 
+            await SeedRolesAsync();
+            await SeedUsersAsync();
+            await SeedAssignRolesAsync();
+            await SeedSaleStatusesAsync();
+            await SeedTenuresAsync();
+            await SeedPropertyTypesAsync();
+            await SeedAdressesAsync();
+            await _context.SaveChangesAsync();
+            await SeedPropertiesAsync();
+            await _context.SaveChangesAsync();
+            await SeedExpressionOfInterestsAsync();
+
+            await _context.SaveChangesAsync();
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+        private async Task SeedRolesAsync()
+        {
+            await _roleManager.CreateAsync(new IdentityRole { Name = "User" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "EstateAgent" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+        }
+
+        private async Task SeedUsersAsync()
+        {
+            string password = "Test123!";
+
+            var applicationUser1 = new ApplicationUser
+            {
+                FirstName = "Testarn",
+                LastName = "Testarnsson (användare)",
+                Email = "test@test",
+                UserName = "test@test"
+            };
+            await _userManager.CreateAsync(applicationUser1, password);
+
+            var applicationUser2 = new ApplicationUser
+            {
+                FirstName = "Micke",
+                LastName = "Med kaffet (mäklare)",
+                Email = "micke@kaffe",
+                UserName = "micke@kaffe"
+            };
+            await _userManager.CreateAsync(applicationUser2, password);
+
+            var applicationUser3 = new ApplicationUser
+            {
+                FirstName = "Goatman",
+                LastName = "Asskickingson (admin)",
+                Email = "admin@admin",
+                UserName = "admin@admin"
+            };
+            await _userManager.CreateAsync(applicationUser3, password);
+
+            var applicationUser4 = new ApplicationUser
+            {
+                FirstName = "Tommy",
+                LastName = "Tomtefar",
+                Email = "Tompa@tompasventilation.se",
+                UserName = "Tompa@tompasventilation.se"
+            };
+            await _userManager.CreateAsync(applicationUser4, password);
+        }
+
+        private async Task SeedAssignRolesAsync()
+        {
+            var user1 = await _context.Users.FirstAsync(a => a.UserName == "test@test");
+            await _userManager.AddToRoleAsync(user1, "User");
+
+            var user2 = await _context.Users.FirstAsync(a => a.UserName == "micke@kaffe");
+            await _userManager.AddToRoleAsync(user2, "EstateAgent");
+
+            var user3 = await _context.Users.FirstAsync(a => a.UserName == "admin@admin");
+            await _userManager.AddToRoleAsync(user3, "Admin");
+        }
+
+        private async Task SeedSaleStatusesAsync()
+        {
+            List<SaleStatus> saleStatuses = new()
+            {
+                new SaleStatus { Description = "Sold"},
+                new SaleStatus { Description = "For sale"},
+                new SaleStatus { Description = "Not for sale"}
+            };
+            await _context.SaleStatuses.AddRangeAsync(saleStatuses);
+        }
+
+        private async Task SeedTenuresAsync()
+        {
+            List<Tenure> tenures = new()
+            {
+                new Tenure { Description = "Tenancy" },
+                new Tenure { Description = "Condominium" },
+                new Tenure { Description = "Owner occupancy"}
+            };
+            await _context.Tenures.AddRangeAsync(tenures);
+        }
+
+        private async Task SeedPropertyTypesAsync()
+        {
+            List<PropertyType> propertyTypes = new()
+            {
+                new PropertyType { Description = "Villa" },
+                new PropertyType { Description = "Apartment" },
+                new PropertyType { Description = "Terrace house" },
+                new PropertyType { Description = "Farm" },
+                new PropertyType { Description = "Plot" },
+                new PropertyType { Description = "Husvilla" }
+            };
+            await _context.PropertyTypes.AddRangeAsync(propertyTypes);
+        }
+
+        private async Task SeedAdressesAsync()
+        {
             List<Adress> adresses = new()
             {
                 new Adress()
@@ -69,63 +191,10 @@ namespace HomeFinder.Controllers
                 }
             };
             await _context.Adresses.AddRangeAsync(adresses);
+        }
 
-            string password = "Test123!";
-            var applicationUser1 = new ApplicationUser
-            {
-                FirstName = "testarn",
-                LastName = "testarnsson",
-                Email = "test@test",
-                UserName = "test@test"
-            };
-            await _userManager.CreateAsync(applicationUser1, password);
-
-            var applicationUser2 = new ApplicationUser
-            {
-                FirstName = "Micke",
-                LastName = "Med kaffet",
-                Email = "ork@a.va",
-                UserName = "ork@a.va"
-            };
-            await _userManager.CreateAsync(applicationUser2, password);
-
-            var applicationUser3 = new ApplicationUser
-            {
-                FirstName = "Tommy",
-                LastName = "Tomtefar",
-                Email = "Tompa@tompasventilation.se",
-                UserName = "Tompa@tompasventilation.se"
-            };
-            await _userManager.CreateAsync(applicationUser3, password);
-
-            List<SaleStatus> saleStatuses = new()
-            {
-                new SaleStatus { Description = "Sold"},
-                new SaleStatus { Description = "For sale"},
-                new SaleStatus { Description = "Not for sale"}
-            };
-            await _context.SaleStatuses.AddRangeAsync(saleStatuses);
-
-            List<Tenure> tenures = new()
-            {
-                new Tenure { Description = "For sale"},
-                new Tenure { Description = "For rent" },
-                new Tenure { Description = "Condominium" }
-            };
-            await _context.Tenures.AddRangeAsync(tenures);
-
-            List<PropertyType> propertyTypes = new()
-            {
-                new PropertyType { Description = "Villa" },
-                new PropertyType { Description = "Apartment" },
-                new PropertyType { Description = "Terrace house" },
-                new PropertyType { Description = "Farm" },
-                new PropertyType { Description = "Plot" },
-                new PropertyType { Description = "Husvilla" }
-            };
-            await _context.PropertyTypes.AddRangeAsync(propertyTypes);
-            await _context.SaveChangesAsync();
-
+        private async Task SeedPropertiesAsync()
+        {
             List<Property> properties = new()
             {
                 new Property()
@@ -167,7 +236,7 @@ namespace HomeFinder.Controllers
                 new Property()
                 {
                     Price = 10000000m,
-                    Description = "Stuga. I skogen.",
+                    Description = "Stuga. I skogen. Träd kan finnas i närområdet.",
                     Summary = "Fin.",
                     NumberOfRooms = 6,
                     BuildingArea = 120,
@@ -202,31 +271,29 @@ namespace HomeFinder.Controllers
                 },
             };
             await _context.Properties.AddRangeAsync(properties);
-            await _context.SaveChangesAsync();
+        }
 
+        private async Task SeedExpressionOfInterestsAsync()
+        {
             List<ExpressionOfInterest> expressionOfInterests = new()
             {
                 new ExpressionOfInterest()
                 {
-                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test"),
                     Property = await _context.Properties.FindAsync(1)
                 },
                 new ExpressionOfInterest()
                 {
-                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test"),
                     Property = await _context.Properties.FindAsync(2)
                 },
                 new ExpressionOfInterest()
                 {
-                    ApplicationUser = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null),
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test"),
                     Property = await _context.Properties.FindAsync(3)
                 }
             };
             await _context.ExpressionOfInterests.AddRangeAsync(expressionOfInterests);
-            await _context.SaveChangesAsync();
-
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
         }
     }
 }
