@@ -1,0 +1,76 @@
+﻿@inject SignInManager<ApplicationUser> signInManager
+@inject HomeFinderContext _context
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">HomeFinder</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse">
+
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" asp-controller="Seed" asp-action="SeedData">Seed</a>
+                </li>
+            </ul>
+
+            @* Olika dropdown-menyer baserat på inloggstatus och roll. *@
+            <div class="dropdown">
+                @{
+                    string dropdownMenuName = "Menu";
+                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        dropdownMenuName = User.Identity.Name;
+                    }
+                }
+
+                <a class="dropdown-toggle my-3 mr-3 btn btn-primary" href="#" id="dropdownNavMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@dropdownMenuName</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownNavMenu">
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <a class="dropdown-item" asp-controller="UserOptions" asp-action="UpdateProfile">Update profile info</a>
+
+                        if (User.IsInRole("User"))
+                        {
+                            <a class="dropdown-item" asp-controller="UserOptions" asp-action="DisplayExpressionOfInterests">Expression of Interests</a>
+                        }
+                        else if (User.IsInRole("EstateAgent"))
+                        {
+                            <a class="dropdown-item" asp-controller="EstateAgentOptions" asp-action="ShowProperties" 
+                                asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.UserName == User.Identity.Name).Id">
+                                My properties
+                            </a>
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <a class="dropdown-item" asp-controller="AdminOptions" asp-action="ListUsers">Manage users</a>
+                            <a class="dropdown-item" asp-controller="AdminOptions" asp-action="ListRoles">Manage roles</a>
+                            <a class="dropdown-item" asp-controller="Properties" asp-action="Index">Manage properties</a>
+                        }
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Login">Login</a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Create">Register</a>
+                    }
+                </div>
+            </div>
+
+            <div>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <partial name="_LogoutPartial" />
+                }
+            </div>
+
+        </div>
+    </div>
+</nav>
