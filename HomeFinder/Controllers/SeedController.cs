@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
@@ -213,7 +214,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(u => u.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -231,7 +232,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(u => u.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -249,7 +250,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(6),
                     Tenure = await _context.Tenures.FindAsync(1),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(u => u.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -267,7 +268,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(3),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(u => u.UserName == "micke@kaffe")
                 },
             };
             await _context.Properties.AddRangeAsync(properties);
