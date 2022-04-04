@@ -1,5 +1,6 @@
 ﻿using HomeFinder.Models;
 using HomeFinder.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace HomeFinder.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
 
@@ -50,6 +53,7 @@ namespace HomeFinder.Controllers
                 
                 if (result.Succeeded) // Om det gick bra att skapa användaren:
                 {
+                    await _userManager.AddToRoleAsync(user, "User");
                     await _signInManager.SignInAsync(user, model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }
@@ -113,6 +117,7 @@ namespace HomeFinder.Controllers
 
         // GET: /User/Logout
         [HttpGet]
+        [Authorize]
         public IActionResult Logout() // Om man försöker nå login via url:
         {
             return RedirectToAction("Index", "Home");
@@ -120,6 +125,7 @@ namespace HomeFinder.Controllers
 
         // POST: /User/Logout
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout(bool? notUsed) // Logout görs med post-request av säkerhetsskäl.
         {
             await _signInManager.SignOutAsync();

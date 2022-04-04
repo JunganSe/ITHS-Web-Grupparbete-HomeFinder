@@ -25,7 +25,6 @@ namespace HomeFinder.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Privacy()
         {
             return View();

@@ -1,6 +1,7 @@
 ﻿using HomeFinder.Data;
 using HomeFinder.Models;
 using HomeFinder.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "EstateAgent, Admin")]
     public class EstateAgentOptionsController : Controller
     {
 
@@ -24,10 +26,7 @@ namespace HomeFinder.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+
 
         public IActionResult ShowProperties(string userid)
 {
@@ -46,7 +45,6 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
-
             else if (userid != (_context.Properties.FirstOrDefault(p => p.Id == id)).EstateAgentId)
             {
                 //TODO: Ändra till access denied
@@ -159,7 +157,7 @@ namespace HomeFinder.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ShowProperties));
             }
 
             return View();
@@ -203,7 +201,7 @@ namespace HomeFinder.Controllers
             var property = await _context.Properties.FindAsync(id);
             _context.Properties.Remove(property);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ShowProperties));
         }
 
         private bool PropertyExists(int id)
@@ -220,7 +218,7 @@ namespace HomeFinder.Controllers
             propertyViewModel.Tenures = _context.Tenures.Where(a => a.Description != null).ToList();
             propertyViewModel.PropertyTypes = _context.PropertyTypes.Where(a => a.Description != null).ToList();
 
-//TODO: Lägg till att bara mäklare ska dyka upp i listan nedan!
+            //TODO: Lägg till att bara mäklare ska dyka upp i listan nedan!
             propertyViewModel.EstateAgents = _userManager.Users.Where(a => a.UserName != null).ToList();
 
 
