@@ -39,8 +39,8 @@ namespace HomeFinder
             // Ställer custom routes för gemensamma sidor.
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = new PathString("/User/Login");
-                options.AccessDeniedPath = new PathString("/User/AccessDenied");
+                options.LoginPath = new PathString("/Account/Login");
+                options.AccessDeniedPath = new PathString("/Account/AccessDenied");
             });
         }
 

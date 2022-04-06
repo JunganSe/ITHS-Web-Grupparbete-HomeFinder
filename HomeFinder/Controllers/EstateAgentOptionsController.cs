@@ -210,7 +210,7 @@ namespace HomeFinder.Controllers
         }
 
 
-        public PropertyViewModel CreatePropertyViewModel()
+        private PropertyViewModel CreatePropertyViewModel()
         {
             PropertyViewModel propertyViewModel = new();
 

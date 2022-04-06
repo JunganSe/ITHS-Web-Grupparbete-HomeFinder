@@ -22,7 +22,7 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /User/Create
+        // GET: /Account/Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -36,11 +36,11 @@ namespace HomeFinder.Controllers
             }
         }
 
-        // POST: /User/Create
+        // POST: /Account/Create
         [HttpPost]
         public async Task<IActionResult> Create(CreateAccountModel model)
         {
-            if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
+            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
                 var user = new ApplicationUser()
                 {
@@ -50,7 +50,7 @@ namespace HomeFinder.Controllers
                     LastName = model.LastName
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                
+
                 if (result.Succeeded) // Om det gick bra att skapa användaren:
                 {
                     await _userManager.AddToRoleAsync(user, "User");
@@ -70,7 +70,7 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /User/Login
+        // GET: /Account/Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -84,17 +84,17 @@ namespace HomeFinder.Controllers
             }
         }
 
-        // POST: /User/Login
+        // POST: /Account/Login
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
+            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                
 
-                if(result.Succeeded) // Om det gick bra att logga in:
+
+                if (result.Succeeded) // Om det gick bra att logga in:
                 {
-                    if ((!string.IsNullOrEmpty(returnUrl)) 
+                    if ((!string.IsNullOrEmpty(returnUrl))
                         && (Url.IsLocalUrl(returnUrl))) // (säkerhetskontroll)
                     {
                         return Redirect(returnUrl);
@@ -115,7 +115,7 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /User/Logout
+        // GET: /Account/Logout
         [HttpGet]
         [Authorize]
         public IActionResult Logout() // Om man försöker nå login via url:
@@ -123,7 +123,7 @@ namespace HomeFinder.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: /User/Logout
+        // POST: /Account/Logout
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Logout(bool? notUsed) // Logout görs med post-request av säkerhetsskäl.
@@ -131,6 +131,15 @@ namespace HomeFinder.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-            
+
+
+
+        // GET: /Account/AccessDenied
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl)
+        {
+            ViewData["returnUrl"] = returnUrl;
+            return View();
+        }
     }
 }
