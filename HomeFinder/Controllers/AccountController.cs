@@ -1,5 +1,6 @@
 ﻿using HomeFinder.Models;
 using HomeFinder.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,16 +11,18 @@ namespace HomeFinder.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
 
 
-        // GET: /User/Create
+        // GET: /Account/Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -33,11 +36,11 @@ namespace HomeFinder.Controllers
             }
         }
 
-        // POST: /User/Create
+        // POST: /Account/Create
         [HttpPost]
         public async Task<IActionResult> Create(CreateAccountModel model)
         {
-            if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
+            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
                 var user = new ApplicationUser()
                 {
@@ -47,9 +50,10 @@ namespace HomeFinder.Controllers
                     LastName = model.LastName
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                
+
                 if (result.Succeeded) // Om det gick bra att skapa användaren:
                 {
+                    await _userManager.AddToRoleAsync(user, "User");
                     await _signInManager.SignInAsync(user, model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }
@@ -66,7 +70,7 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /User/Login
+        // GET: /Account/Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -80,17 +84,17 @@ namespace HomeFinder.Controllers
             }
         }
 
-        // POST: /User/Login
+        // POST: /Account/Login
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if(ModelState.IsValid) // Om alla properties validerar med sina attributes:
+            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                
 
-                if(result.Succeeded) // Om det gick bra att logga in:
+
+                if (result.Succeeded) // Om det gick bra att logga in:
                 {
-                    if ((!string.IsNullOrEmpty(returnUrl)) 
+                    if ((!string.IsNullOrEmpty(returnUrl))
                         && (Url.IsLocalUrl(returnUrl))) // (säkerhetskontroll)
                     {
                         return Redirect(returnUrl);
@@ -111,20 +115,31 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /User/Logout
+        // GET: /Account/Logout
         [HttpGet]
+        [Authorize]
         public IActionResult Logout() // Om man försöker nå login via url:
         {
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: /User/Logout
+        // POST: /Account/Logout
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout(bool? notUsed) // Logout görs med post-request av säkerhetsskäl.
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-            
+
+
+
+        // GET: /Account/AccessDenied
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl)
+        {
+            ViewData["returnUrl"] = returnUrl;
+            return View();
+        }
     }
 }

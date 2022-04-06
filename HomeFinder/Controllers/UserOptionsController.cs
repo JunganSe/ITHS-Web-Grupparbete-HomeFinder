@@ -7,6 +7,7 @@ using HomeFinder.Data;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeFinder.Controllers
 {
@@ -23,6 +24,7 @@ namespace HomeFinder.Controllers
 
         // GET: /UserOptions/Index
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult Index()
         {
             return View();
@@ -32,6 +34,7 @@ namespace HomeFinder.Controllers
 
         // GET: /UserOptions/UpdateProfile
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> UpdateProfile()
         {
             // Hämta data från databasen, lägg den i model och skicka till view.
@@ -47,6 +50,7 @@ namespace HomeFinder.Controllers
 
         // POST: /UserOptions/UpdateProfile
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UpdateProfile(UserOptionsViewModel model)
         {
             var user = await _userManager.GetUserAsync(User); // Hämta den inloggade användaren.
@@ -100,6 +104,7 @@ namespace HomeFinder.Controllers
 
         // GET: /UserController/ManageExpressionOfInterests
         [HttpGet]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> DisplayExpressionOfInterests()
         {
             var user = await _userManager.GetUserAsync(User);

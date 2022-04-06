@@ -1,6 +1,4 @@
-﻿@inject SignInManager<ApplicationUser> signInManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,92 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">HomeFinder</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" asp-controller="Seed" asp-action="SeedData">Seed</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Properties" asp-action="Index">Properties List</a>
-                        </li>
-
-                        <li>
-                            <partial name="_AdminPartial" />
-                        </li>
-                        <li>
-                            <partial name="_EstateAgentPartial" />
-
-                        </li>
-
-                    </ul>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <ul class="navbar-nav flex-grow-1">
-
-                            @if (signInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                        Logout
-                                    </button>
-                                    <!-- The Modal -->
-                                <div class="modal fade" id="myModal">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-
-                                                <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Do you really want to logout?</h4>                                                   
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-
-                                                <!-- Modal body -->
-                                              <div class="modal-body">
-                                                    @* Formulär för att få logout att bli en html-post (av säkerhetsskäl). *@
-                                                   <form method="post" asp-controller="Account" asp-action="Logout">
-                                                        <button type="submit" class="btn btn-primary">Yes</button>
-                                                    </form>  
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No!</button>
-                                              </div>
-
-                                                <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                
-                                            </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <partial name="_UserPartial" />
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Account" asp-action="Create">Register</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </nav>
+        <partial name="_NavbarPartial" />
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -112,12 +25,14 @@
             &copy; 0 - Year of Lord Jesus - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+@*
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿using HomeFinder.Models;
 using HomeFinder.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminOptionsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

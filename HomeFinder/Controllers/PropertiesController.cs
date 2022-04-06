@@ -13,9 +13,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "EstateAgent, Admin")]
     public class PropertiesController : Controller
     {
         private readonly HomeFinderContext _context;
@@ -251,7 +253,7 @@ namespace HomeFinder.Controllers
         }
 
 
-        public PropertyViewModel CreatePropertyViewModel()
+        private PropertyViewModel CreatePropertyViewModel()
         {
             PropertyViewModel propertyViewModel = new();
 
