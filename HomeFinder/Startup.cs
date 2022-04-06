@@ -11,8 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Authentication.Google;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +35,6 @@ namespace HomeFinder
             services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString"))); // Lägg till context för att kunna kommunicera med databasen.
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>(); // Lägg till stöd för Identity-systemet.
-
-            
 
             // Ställer custom routes för gemensamma sidor.
             services.ConfigureApplicationCookie(options =>
