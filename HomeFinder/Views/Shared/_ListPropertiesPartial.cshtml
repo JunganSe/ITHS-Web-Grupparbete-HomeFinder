@@ -1,0 +1,18 @@
+﻿@if (Model != null)
+{
+    @foreach (var m in Model.Properties)
+    {
+        <h2>@m.Adress.Street  @m.Adress.StreetNumber</h2>
+        <h3>@m.Adress.PostalCode @m.Adress.City</h3>
+        <h3>Number of Rooms: @m.NumberOfRooms</h3>
+        <h3>Type: @m.PropertyType.Description</h3>
+        <h3>Area: @m.PlotArea</h3>
+        <h3>Price: $@Math.Round(@m.Price, 2)</h3>
+        <h3>Country: @m.Adress.Country</h3>
+        <h3>Tenure: @m.Tenure.Description</h3>
+
+        <br />
+        <br />
+
+    }
+}

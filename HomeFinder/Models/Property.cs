@@ -28,6 +28,10 @@ namespace HomeFinder.Models
         public double BuildingArea { get; set; }
 
         [Required]
+        [Display(Name = "Bee Area")]
+        public double BeeArea { get; set; }
+
+        [Required]
         [Display(Name = "Plot Area")]
         public double PlotArea { get; set; }
 

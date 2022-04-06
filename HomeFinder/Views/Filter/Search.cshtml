@@ -1,0 +1,73 @@
+﻿@using HomeFinder.Data
+@model FilterViewModel
+@inject HomeFinderContext _context
+<link rel="stylesheet" href="~/css/filteroptions.css">
+@{
+    ViewData["Title"] = "Search for Houses";
+}
+<form method="get" asp-controller="Filter" asp-action="Search">
+    <div class="row1" style="text-align: center">
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="minRooms" placeholder="MinRooms" class="form-control-sm col-12" />
+        </div>
+
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="maxRooms" placeholder="MaxRooms" class="form-control-sm col-12" />
+        </div>
+    </div>
+    <div class="row2" style="text-align: center">
+        <div class="form-group" style="display:inline-block">
+            <input type="text" name="city" placeholder="City" class="form-control-sm col-12" />
+        </div>
+        <div class="form-group" style="display:inline-block" id="zipCode">
+            <input type="text" name="zipCode" placeholder="ZipCode" class="form-control-sm col-12" />
+        </div>
+        <div class="form-group" style="display:inline-block" id="zipCode">
+            <input type="text" name="country" placeholder="Country" class="form-control-sm col-12" />
+        </div>
+       
+     </div>
+        <div class="form-group" id="row3" style="text-align:center">
+               @* <label asp-for="@Model.PropertyTypes" class="control-label"></label>*@
+                <select class="form-control col-md-3" name="selectedPropertyType" style="display:inline-block">
+                    <option value="" selected disabled hidden>Property Type</option>
+                    @for (int i = 0; i < Model.PropertyTypes.Count; i++)
+                    {
+                        <option value="@Model.PropertyTypes[i].Id">@Model.PropertyTypes[i].Description</option>
+                    }
+                    
+                </select>
+                <select class="form-control col-md-3" name="selectedTenureType" style="display:inline-block">
+                    <option value="" selected disabled hidden>Tenure Type</option>
+                    @for (int i = 0; i < Model.Tenures.Count; i++)
+                    {
+                        <option value="@Model.Tenures[i].Id">@Model.Tenures[i].Description</option>
+                    }
+                </select>
+            </div>
+        <div id="row4" style="text-align: center">
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="minArea" placeholder="MinArea" class="form-control-sm col-12" />
+        </div>
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="maxArea" placeholder="MaxArea" class="form-control-sm col-12" />
+        </div>
+       
+     </div>
+     <div id="row5" style="text-align: center">
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="minPrice" placeholder="MinPrice" class="form-control-sm col-12" />
+        </div>
+        <div class="form-group" style="display:inline-block">
+            <input type="number" name="maxPrice" placeholder="MaxPrice" class="form-control-sm col-12" />
+        </div>
+       
+     </div>
+
+    <br/>
+    <div class="searchbtn" style="margin:0 auto; display:table">
+        <input type="submit" class="btn-danger" value="Search">
+    </div>
+</form>
+
+<partial name="_ListPropertiesPartial" />

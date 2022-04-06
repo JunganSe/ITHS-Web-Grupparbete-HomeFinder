@@ -107,13 +107,13 @@ namespace HomeFinder.Controllers
 
         private async Task SeedAssignRolesAsync()
         {
-            var user1 = await _context.Users.FirstAsync(a => a.UserName == "test@test");
+            var user1 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test");
             await _userManager.AddToRoleAsync(user1, "User");
 
-            var user2 = await _context.Users.FirstAsync(a => a.UserName == "micke@kaffe");
+            var user2 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe");
             await _userManager.AddToRoleAsync(user2, "EstateAgent");
 
-            var user3 = await _context.Users.FirstAsync(a => a.UserName == "admin@admin");
+            var user3 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "admin@admin");
             await _userManager.AddToRoleAsync(user3, "Admin");
         }
 
@@ -204,6 +204,7 @@ namespace HomeFinder.Controllers
                     Summary = "Fräsig sekelskiftesvilla i Skellefteås innerstad",
                     NumberOfRooms = 1,
                     BuildingArea = 100.2,
+                    BeeArea = 15,
                     PlotArea = 100.3,
                     ConstructionYear = 1502,
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
@@ -213,7 +214,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -222,6 +223,7 @@ namespace HomeFinder.Controllers
                     Summary = "Lägenhet för folk med känd instagram.",
                     NumberOfRooms = 1,
                     BuildingArea = 13,
+                    BeeArea = 150,
                     PlotArea = 0,
                     ConstructionYear = 2021,
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
@@ -231,7 +233,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -240,6 +242,7 @@ namespace HomeFinder.Controllers
                     Summary = "Fin.",
                     NumberOfRooms = 6,
                     BuildingArea = 120,
+                    BeeArea = 8,
                     PlotArea = 1200,
                     ConstructionYear = 1852,
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
@@ -249,7 +252,7 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(6),
                     Tenure = await _context.Tenures.FindAsync(1),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
                 },
                 new Property()
                 {
@@ -258,6 +261,7 @@ namespace HomeFinder.Controllers
                     Summary = "Casa de Karlsson.",
                     NumberOfRooms = 1,
                     BuildingArea = 12,
+                    BeeArea = 5000,
                     PlotArea = 200000,
                     ConstructionYear = 1949,
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
@@ -267,8 +271,8 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(3),
-                    EstateAgent = await _context.ApplicationUsers.FirstOrDefaultAsync(a => a.FirstName != null)
-                },
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
+                }
             };
             await _context.Properties.AddRangeAsync(properties);
         }
