@@ -40,6 +40,7 @@ namespace HomeFinder.Controllers
 
         [AllowAnonymous]
         // GET: Properties/Details/5
+        [AllowAnonymous]        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
