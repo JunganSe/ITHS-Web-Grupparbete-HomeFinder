@@ -2,6 +2,8 @@
 using HomeFinder.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
@@ -26,7 +28,21 @@ namespace HomeFinder.Controllers
             };
             await _context.ExpressionOfInterests.AddAsync(expressionOfInterest);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "");
+            return RedirectToAction("Details", "Properties", new { id });
         }
+
+
+        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+            ExpressionOfInterest expressionOfInterest = await _context.ExpressionOfInterests.FirstOrDefaultAsync(eoi=>eoi.ApplicationUserId == user.Id 
+                                                                                                    && eoi.PropertyId == id);
+            _context.ExpressionOfInterests.Remove(expressionOfInterest);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Properties", new {id});
+        }
+
     }
 }
