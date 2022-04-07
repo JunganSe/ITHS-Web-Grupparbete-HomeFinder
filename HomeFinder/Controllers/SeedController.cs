@@ -16,9 +16,10 @@ namespace HomeFinder.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly HomeFinderContext _context;
-        public SeedController(UserManager<ApplicationUser> userManager, 
-                                SignInManager<ApplicationUser> signInManager, 
-                                RoleManager<IdentityRole> roleManager, 
+
+        public SeedController(UserManager<ApplicationUser> userManager,
+                                SignInManager<ApplicationUser> signInManager,
+                                RoleManager<IdentityRole> roleManager,
                                 HomeFinderContext context)
         {
             _userManager = userManager;
@@ -104,6 +105,24 @@ namespace HomeFinder.Controllers
                 UserName = "Tompa@tompasventilation.se"
             };
             await _userManager.CreateAsync(applicationUser4, password);
+
+            var applicationUser5 = new ApplicationUser
+            {
+                FirstName = "Roy",
+                LastName = "på Macken (mäklare)",
+                Email = "roy@macken.se",
+                UserName = "roy@macken.se"
+            };
+            await _userManager.CreateAsync(applicationUser5, password);
+
+            var applicationUser6 = new ApplicationUser
+            {
+                FirstName = "Klas",
+                LastName = "Kalas (användare)",
+                Email = "klaws@google.com",
+                UserName = "klaws@google.com"
+            };
+            await _userManager.CreateAsync(applicationUser6, password);
         }
 
         private async Task SeedAssignRolesAsync()
@@ -116,15 +135,21 @@ namespace HomeFinder.Controllers
 
             var user3 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "admin@admin");
             await _userManager.AddToRoleAsync(user3, "Admin");
+
+            var user4 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "roy@macken.se");
+            await _userManager.AddToRoleAsync(user4, "EstateAgent");
+
+            var user5 = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "klaws@google.com");
+            await _userManager.AddToRoleAsync(user5, "User");
         }
 
         private async Task SeedSaleStatusesAsync()
         {
             List<SaleStatus> saleStatuses = new()
             {
-                new SaleStatus { Description = "Sold"},
-                new SaleStatus { Description = "For sale"},
-                new SaleStatus { Description = "Not for sale"}
+                new SaleStatus { Description = "Sold" },
+                new SaleStatus { Description = "For sale" },
+                new SaleStatus { Description = "Not for sale" }
             };
             await _context.SaleStatuses.AddRangeAsync(saleStatuses);
         }
@@ -135,7 +160,7 @@ namespace HomeFinder.Controllers
             {
                 new Tenure { Description = "Tenancy" },
                 new Tenure { Description = "Condominium" },
-                new Tenure { Description = "Owner occupancy"}
+                new Tenure { Description = "Owner occupancy" }
             };
             await _context.Tenures.AddRangeAsync(tenures);
         }
@@ -189,6 +214,22 @@ namespace HomeFinder.Controllers
                     PostalCode = "43521",
                     City = "Køpenhavn",
                     Country = "Dnmark"
+                },
+                new Adress()
+                {
+                    Street = "Kyrkan",
+                    StreetNumber = 22,
+                    PostalCode = "53461",
+                    City = "Vedum",
+                    Country = "Sverige"
+                },
+                new Adress()
+                {
+                    Street = "Hajvägen",
+                    StreetNumber = 451,
+                    PostalCode = "22165",
+                    City = "Treriksröset",
+                    Country = "Finland"
                 }
             };
             await _context.Adresses.AddRangeAsync(adresses);
@@ -273,6 +314,44 @@ namespace HomeFinder.Controllers
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(3),
                     EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
+                },
+                new Property()
+                {
+                    Price = 66m,
+                    Description = "Biluthyrningslokaler komplett med rostiga bilar att pilla med.",
+                    Summary = "Roy och Rogers bilservice",
+                    NumberOfRooms = 2,
+                    BuildingArea = 150,
+                    BeeArea = 400,
+                    PlotArea = 700,
+                    ConstructionYear = 1986,
+                    MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8423.50112108746!2d12.976587394679703!3d58.14223879867664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465ac893468b1733%3A0xb2b98809eb817ad9!2s534%2061%20Bitterna!5e0!3m2!1ssv!2sse!4v1649322794451!5m2!1ssv!2sse",
+                    PublishingDate = DateTime.Now,
+                    ViewingDate = DateTime.Now,
+                    Adress = await _context.Adresses.FindAsync(5),
+                    PropertyType = await _context.PropertyTypes.FindAsync(5),
+                    Tenure = await _context.Tenures.FindAsync(2),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(2),
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "roy@macken.se")
+                },
+                new Property()
+                {
+                    Price = 200000m,
+                    Description = "Vill du äga tre länder på samma gång? Självklart vill du det.",
+                    Summary = "Ultimat lyx.",
+                    NumberOfRooms = 1,
+                    BuildingArea = 150,
+                    BeeArea = 42,
+                    PlotArea = 89000,
+                    ConstructionYear = 1101,
+                    MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19032257.77307806!2d-3.9812940566744657!3d54.38748127492599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x45daaf37376e3d75%3A0x35cbf09316b8d2eb!2sTreriksr%C3%B6set!5e0!3m2!1ssv!2sse!4v1649323194113!5m2!1ssv!2sse",
+                    PublishingDate = DateTime.Now,
+                    ViewingDate = DateTime.Now,
+                    Adress = await _context.Adresses.FindAsync(6),
+                    PropertyType = await _context.PropertyTypes.FindAsync(5),
+                    Tenure = await _context.Tenures.FindAsync(3),
+                    SaleStatus = await _context.SaleStatuses.FindAsync(2),
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "roy@macken.se")
                 }
             };
             await _context.Properties.AddRangeAsync(properties);
@@ -296,7 +375,23 @@ namespace HomeFinder.Controllers
                 {
                     ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test"),
                     Property = await _context.Properties.FindAsync(3)
+                },
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "klaws@google.com"),
+                    Property = await _context.Properties.FindAsync(6)
+                },
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "klaws@google.com"),
+                    Property = await _context.Properties.FindAsync(5)
+                },
+                new ExpressionOfInterest()
+                {
+                    ApplicationUser = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "test@test"),
+                    Property = await _context.Properties.FindAsync(5)
                 }
+
             };
             await _context.ExpressionOfInterests.AddRangeAsync(expressionOfInterests);
         }
