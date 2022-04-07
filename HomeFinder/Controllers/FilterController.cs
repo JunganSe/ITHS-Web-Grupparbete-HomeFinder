@@ -19,7 +19,7 @@ namespace HomeFinder.Controllers
         }
         [HttpGet]
         [HttpPost]
-        public async Task<IActionResult> Search(int minRooms, string city, int maxRooms, int selectedPropertyType, string zipCode, int minArea, int maxArea,
+        public IActionResult Search(int minRooms, string city, int maxRooms, int selectedPropertyType, string zipCode, int minArea, int maxArea,
             string country, int minPrice, int maxPrice, int selectedTenureType)
         {
             FilterViewModel filterViewModel = new();

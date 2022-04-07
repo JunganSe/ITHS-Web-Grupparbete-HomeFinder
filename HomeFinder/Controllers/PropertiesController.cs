@@ -59,8 +59,19 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+            PropertyViewModel propertyViewModel = new();
+            propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
+            propertyViewModel.Property = property;
+            ExpressionOfInterest eoi = _context.ExpressionOfInterests.FirstOrDefault(u => u.ApplicationUserId == propertyViewModel.ApplicationUser.Id
+                                                     && u.PropertyId == propertyViewModel.Property.Id);
 
-            return View(property);
+
+            if (eoi is not null)
+            {
+                propertyViewModel.IsInterested = true;
+            }
+
+            return View(propertyViewModel);
         }
 
         // GET: Properties/Create
