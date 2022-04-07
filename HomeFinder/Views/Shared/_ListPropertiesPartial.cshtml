@@ -1,18 +1,36 @@
 ﻿@if (Model != null)
 {
-    @foreach (var m in Model.Properties)
-    {
-        <h2>@m.Adress.Street  @m.Adress.StreetNumber</h2>
-        <h3>@m.Adress.PostalCode @m.Adress.City</h3>
-        <h3>Number of Rooms: @m.NumberOfRooms</h3>
-        <h3>Type: @m.PropertyType.Description</h3>
-        <h3>Area: @m.PlotArea</h3>
-        <h3>Price: $@Math.Round(@m.Price, 2)</h3>
-        <h3>Country: @m.Adress.Country</h3>
-        <h3>Tenure: @m.Tenure.Description</h3>
+    <div class="row">
+        @foreach (var p in Model.Properties)
+        {
+            // TODO: Byt till rätt bild i headern.
+            <div class="col-4">
+                <div class="card">
 
-        <br />
-        <br />
+                    <div class="card-header">
+                        <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
+                    </div>
 
-    }
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
+                        <h6 class="card-subtitle">@p.Adress.PostalCode @p.Adress.City, @p.Adress.Country</h6>
+                        <p class="card-text">
+                            Summary: @p.Summary<br>
+                            Number of Rooms: @p.NumberOfRooms<br>
+                            Area: @p.BuildingArea + @p.BeeArea<br>
+                            Plot Area: @p.PlotArea<br>
+                            Type: @p.PropertyType.Description<br>
+                            Tenure: @p.Tenure.Description<br>
+                            Price: @Math.Round(p.Price)<br>
+                        </p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
 }
