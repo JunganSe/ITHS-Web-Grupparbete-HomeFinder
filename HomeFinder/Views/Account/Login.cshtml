@@ -4,10 +4,12 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
+        <h1>Login</h1>
+        <hr />
         <form method="post">
 
             <div class="form-group">
@@ -32,3 +34,31 @@
         </form>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-6">
+        <h1>External Login</h1>
+        <hr />
+        @{
+            if(Model.ExternalLogins.Count == 0)
+            {
+                <div>No external logins configured</div>
+            }
+            else
+            {
+               <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                    <div>
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-primary"
+                                    name="provider" value="@provider.Name"
+                                    title="Log in using your @provider.DisplayName account">
+                                @provider.DisplayName
+                            </button>
+                        }
+                    </div>
+                </form>
+            }
+        }  
+     </div>
+</div>
+

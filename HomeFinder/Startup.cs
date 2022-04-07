@@ -36,6 +36,12 @@ namespace HomeFinder
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>(); // Lägg till stöd för Identity-systemet.
 
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "489054105101-0rffu1j2l6set0agmumpnji7i0jjrj96.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
             // Ställer custom routes för gemensamma sidor.
             services.ConfigureApplicationCookie(options =>
             {

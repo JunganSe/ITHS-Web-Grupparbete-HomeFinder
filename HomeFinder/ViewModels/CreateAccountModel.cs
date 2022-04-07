@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authentication;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace HomeFinder.ViewModels
@@ -29,5 +31,9 @@ namespace HomeFinder.ViewModels
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        //public string ReturnUrl { get; set; }
+
+        //public IList<AuthenticationScheme> ExternalLogins { get; set; }
     }
 }
