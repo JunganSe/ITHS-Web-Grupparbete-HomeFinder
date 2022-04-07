@@ -38,7 +38,7 @@ namespace HomeFinder.Controllers
             return View(await homeFinderContext.ToListAsync());
         }
 
-        [AllowAnonymous]
+        
         // GET: Properties/Details/5
         [AllowAnonymous]        
         public async Task<IActionResult> Details(int? id)
