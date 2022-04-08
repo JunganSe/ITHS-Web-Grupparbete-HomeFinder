@@ -10,6 +10,7 @@
 
 <h4>Property</h4>
 
+
 @if (signInManager.IsSignedIn(User))
 {
     if (User.IsInRole("User"))
@@ -30,7 +31,11 @@
         <a asp-action="Delete" asp-route-id="@Model.Property.Id">Delete</a>
     }
 }
-    
+else
+{
+    <a asp-controller="ExpressionOfInterest" asp-action="Add" asp-route-id="@Model.Property.Id">Express interest</a>
+}
+
 <div> 
     <hr />
     <dl class="row">

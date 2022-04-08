@@ -1,22 +1,27 @@
 ﻿using HomeFinder.Data;
 using HomeFinder.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeFinder.Controllers
 {
+    [Authorize(Roles = "User")]
     public class ExpressionOfInterestController : Controller
     {
         private readonly HomeFinderContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+
         public ExpressionOfInterestController(HomeFinderContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
+
         [HttpGet]
         [HttpPost]
         public async Task<IActionResult> Add(int id)
@@ -37,11 +42,11 @@ namespace HomeFinder.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             ApplicationUser user = await _userManager.GetUserAsync(User);
-            ExpressionOfInterest expressionOfInterest = await _context.ExpressionOfInterests.FirstOrDefaultAsync(eoi=>eoi.ApplicationUserId == user.Id 
+            ExpressionOfInterest expressionOfInterest = await _context.ExpressionOfInterests.FirstOrDefaultAsync(eoi => eoi.ApplicationUserId == user.Id
                                                                                                     && eoi.PropertyId == id);
             _context.ExpressionOfInterests.Remove(expressionOfInterest);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Properties", new {id});
+            return RedirectToAction("Details", "Properties", new { id });
         }
 
     }

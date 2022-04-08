@@ -38,9 +38,9 @@ namespace HomeFinder.Controllers
             return View(await homeFinderContext.ToListAsync());
         }
 
-        
+
         // GET: Properties/Details/5
-        [AllowAnonymous]        
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -60,15 +60,18 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
             PropertyViewModel propertyViewModel = new();
-            propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
             propertyViewModel.Property = property;
-            ExpressionOfInterest eoi = _context.ExpressionOfInterests.FirstOrDefault(u => u.ApplicationUserId == propertyViewModel.ApplicationUser.Id
-                                                     && u.PropertyId == propertyViewModel.Property.Id);
 
-
-            if (eoi is not null)
+            if (User.Identity.Name != null)
             {
-                propertyViewModel.IsInterested = true;
+                propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
+
+                ExpressionOfInterest eoi = _context.ExpressionOfInterests.FirstOrDefault(u => u.ApplicationUserId == propertyViewModel.ApplicationUser.Id
+                                                         && u.PropertyId == propertyViewModel.Property.Id);
+                if (eoi is not null)
+                {
+                    propertyViewModel.IsInterested = true;
+                }
             }
 
             return View(propertyViewModel);
@@ -125,7 +128,7 @@ namespace HomeFinder.Controllers
                         {
                             Url = uniqueFileName,
                             PropertyId = newProperty.Id
-                            
+
                         });
                         await _context.SaveChangesAsync();
                     }
