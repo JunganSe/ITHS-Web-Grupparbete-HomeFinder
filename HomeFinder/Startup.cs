@@ -35,7 +35,8 @@ namespace HomeFinder
             services.AddDbContext<HomeFinderContext>(options => options.UseSqlServer(Configuration.GetConnectionString("HomeFinderConnectionString"))); // Lägg till context för att kunna kommunicera med databasen.
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeFinderContext>(); // Lägg till stöd för Identity-systemet.
-
+            
+            //Google extern inloggning
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {

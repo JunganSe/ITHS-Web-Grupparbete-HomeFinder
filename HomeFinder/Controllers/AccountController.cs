@@ -143,9 +143,11 @@ namespace HomeFinder.Controllers
                             Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                             FirstName = info.Principal.FindFirstValue(ClaimTypes.Name),
                             LastName = info.Principal.FindFirstValue(ClaimTypes.Surname)
+                            
                         };
-
+                        
                         await _userManager.CreateAsync(user);
+                        await _userManager.AddToRoleAsync(user, "User");
                     }
 
                     await _userManager.AddLoginAsync(user, info);
