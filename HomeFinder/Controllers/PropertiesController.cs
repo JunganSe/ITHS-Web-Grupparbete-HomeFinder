@@ -34,8 +34,21 @@ namespace HomeFinder.Controllers
         // GET: Properties
         public async Task<IActionResult> Index()
         {
-            var homeFinderContext = _context.Properties.Include(p => p.Adress).Include(p => p.EstateAgent).Include(p => p.PropertyType).Include(p => p.SaleStatus).Include(p => p.Tenure);
-            return View(await homeFinderContext.ToListAsync());
+            var currentUserId = GetUserId();
+
+            if (IsEstateAgent(currentUserId))
+            {
+                var properties = _context.Properties.Include(p => p.Adress).Include(p => p.EstateAgent).Include(p => p.PropertyType).Include(p => p.SaleStatus).Include(p => p.Tenure);
+                var userProperties = properties.Where(u => u.EstateAgentId == currentUserId);
+
+                return View(userProperties.ToList());
+            }
+            else
+            {
+                var homeFinderContext = _context.Properties.Include(p => p.Adress).Include(p => p.EstateAgent).Include(p => p.PropertyType).Include(p => p.SaleStatus).Include(p => p.Tenure);
+                return View(await homeFinderContext.ToListAsync());
+            }
+
         }
 
 
@@ -59,19 +72,38 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
-            PropertyViewModel propertyViewModel = new();
+            PropertyViewModel propertyViewModel = CreatePropertyViewModel();
             propertyViewModel.Property = property;
 
             if (User.Identity.Name != null)
             {
-                propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
 
-                ExpressionOfInterest eoi = _context.ExpressionOfInterests.FirstOrDefault(u => u.ApplicationUserId == propertyViewModel.ApplicationUser.Id
-                                                         && u.PropertyId == propertyViewModel.Property.Id);
-                if (eoi is not null)
+                var currentUserId = GetUserId();
+
+                if (IsEstateAgent(currentUserId))
                 {
-                    propertyViewModel.IsInterested = true;
+                    if (currentUserId != (_context.Properties.FirstOrDefault(p => p.Id == id)).EstateAgentId)
+                    {
+                        RedirectToAction("AccessDenied", "Account");
+                    }
+                    else
+                    {
+                        propertyViewModel.ExpressionsOfInterest = _context.ExpressionOfInterests.ToList();
+                    }
+
                 }
+                else
+                {
+                    propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
+
+                    ExpressionOfInterest eoi = _context.ExpressionOfInterests.FirstOrDefault(u => u.ApplicationUserId == propertyViewModel.ApplicationUser.Id
+                                                             && u.PropertyId == propertyViewModel.Property.Id);
+                    if (eoi is not null)
+                    {
+                        propertyViewModel.IsInterested = true;
+                    }
+                }
+
             }
 
             return View(propertyViewModel);
@@ -146,13 +178,20 @@ namespace HomeFinder.Controllers
         // GET: Properties/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var currentUserId = GetUserId();
+
             if (id == null)
             {
                 return NotFound();
             }
+            else if (currentUserId != (_context.Properties.FirstOrDefault(p => p.Id == id)).EstateAgentId)
+            {
+                RedirectToAction("AccessDenied", "Account");
+            }
 
             PropertyViewModel propertyViewModel = CreatePropertyViewModel();
             Property property = await _context.Properties.FindAsync(id);
+
 
             if (property == null)
             {
@@ -232,9 +271,15 @@ namespace HomeFinder.Controllers
         // GET: Properties/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var currentUserId = GetUserId();
+
             if (id == null)
             {
                 return NotFound();
+            }
+            else if (currentUserId != (_context.Properties.FirstOrDefault(p => p.Id == id)).EstateAgentId)
+            {
+                RedirectToAction("AccessDenied", "Account");
             }
 
             var property = await _context.Properties
@@ -273,12 +318,21 @@ namespace HomeFinder.Controllers
         {
             PropertyViewModel propertyViewModel = new();
 
-            propertyViewModel.SaleStatuses = _context.SaleStatuses.Where(a => a.Description != null).ToList();
-            propertyViewModel.Tenures = _context.Tenures.Where(a => a.Description != null).ToList();
-            propertyViewModel.PropertyTypes = _context.PropertyTypes.Where(a => a.Description != null).ToList();
+            propertyViewModel.SaleStatuses = _context.SaleStatuses.ToList();
+            propertyViewModel.Tenures = _context.Tenures.ToList();
+            propertyViewModel.PropertyTypes = _context.PropertyTypes.ToList();
 
             //TODO: Lägg till att bara mäklare ska dyka upp i listan nedan!
-            propertyViewModel.EstateAgents = _userManager.Users.Where(a => a.UserName != null).ToList();
+
+            propertyViewModel.Users = _context.ApplicationUsers.ToList();
+
+            foreach (var u in propertyViewModel.Users)
+            {
+                if (_userManager.IsInRoleAsync(u, "EstateAgent").Result)
+                {
+                    propertyViewModel.EstateAgents.Add(u);
+                }
+            }
 
 
             return propertyViewModel;
@@ -286,6 +340,26 @@ namespace HomeFinder.Controllers
         }
 
 
+        private string GetUserId()
+        {
+            var currentUser = _context.ApplicationUsers.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            return currentUser.Id;
+        }
+
+        private bool IsEstateAgent(string userid)
+        {
+            var currentUser = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userid);
+
+
+            if (_userManager.IsInRoleAsync(currentUser, "EstateAgent").Result == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 }

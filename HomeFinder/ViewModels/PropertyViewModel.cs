@@ -12,7 +12,8 @@ namespace HomeFinder.ViewModels
         public List<SaleStatus> SaleStatuses { get; set; }
         public List<Tenure> Tenures { get; set; }
         public List<PropertyType> PropertyTypes { get; set; }
-        public List<ApplicationUser> EstateAgents { get; set; }
+        public List<ApplicationUser> EstateAgents { get; set; } = new List<ApplicationUser>();
+        public List<ApplicationUser> Users { get; set; }
         public List<IFormFile> Images { get; set; }
         public List<ExpressionOfInterest> ExpressionsOfInterest { get; set; }
         public bool IsInterested { get; set; } = false;

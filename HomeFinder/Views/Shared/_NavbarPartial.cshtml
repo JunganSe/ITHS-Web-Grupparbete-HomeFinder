@@ -47,7 +47,7 @@
                         }
                         else if (User.IsInRole("EstateAgent"))
                         {
-                            <a class="dropdown-item" asp-controller="EstateAgentOptions" asp-action="ShowProperties" 
+                            <a class="dropdown-item" asp-controller="Properties" asp-action="Index" 
                                 asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.UserName == User.Identity.Name).Id">
                                 My properties
                             </a>
