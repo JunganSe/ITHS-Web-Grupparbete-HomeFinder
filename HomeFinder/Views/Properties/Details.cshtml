@@ -15,8 +15,8 @@
 {
     if (User.IsInRole("User"))
     {
-        
-        if(Model.IsInterested == false)
+
+        if (Model.IsInterested == false)
         {
             <a asp-controller="ExpressionOfInterest" asp-action="Add" asp-route-id="@Model.Property.Id">Express interest</a>
         }
@@ -36,7 +36,7 @@ else
     <a asp-controller="ExpressionOfInterest" asp-action="Add" asp-route-id="@Model.Property.Id">Express interest</a>
 }
 
-<div> 
+<div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -136,6 +136,27 @@ else
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model=> model.Property.EstateAgent.FirstName) @Html.DisplayFor(model=>model.Property.EstateAgent.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Property.ExpressionOfInterests)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.ExpressionsOfInterest != null)
+            {
+                <ul>
+                    @foreach (var e in Model.ExpressionsOfInterest.Where(e => e.PropertyId == Model.Property.Id))
+                    {
+                        <li>
+                            <p>
+                                @Model.Users.FirstOrDefault(u=>u.Id == e.ApplicationUserId).FirstName
+                                @Model.Users.FirstOrDefault(u=>u.Id == e.ApplicationUserId).LastName
+                            </p>
+                        </li>
+                    }
+                </ul>
+            }
+
+
         </dd>
     </dl>
 </div>
