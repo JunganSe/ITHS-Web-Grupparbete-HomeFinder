@@ -32,27 +32,27 @@ namespace HomeFinder.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Property>> GetProperty(int id)
         {
-            var @property = await _context.Properties.FindAsync(id);
+            var property = await _context.Properties.FindAsync(id);
 
-            if (@property == null)
+            if (property == null)
             {
                 return NotFound();
             }
 
-            return @property;
+            return property;
         }
 
         // PUT: api/PropertyAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProperty(int id, Property @property)
+        public async Task<IActionResult> PutProperty(int id, Property property)
         {
-            if (id != @property.Id)
+            if (id != property.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@property).State = EntityState.Modified;
+            _context.Entry(property).State = EntityState.Modified;
 
             try
             {
@@ -76,25 +76,25 @@ namespace HomeFinder.Controllers
         // POST: api/PropertyAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Property>> PostProperty(Property @property)
+        public async Task<ActionResult<Property>> PostProperty(Property property)
         {
-            _context.Properties.Add(@property);
+            _context.Properties.Add(property);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProperty", new { id = @property.Id }, @property);
+            return CreatedAtAction("GetProperty", new { id = property.Id }, property);
         }
 
         // DELETE: api/PropertyAPI/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProperty(int id)
         {
-            var @property = await _context.Properties.FindAsync(id);
-            if (@property == null)
+            var property = await _context.Properties.FindAsync(id);
+            if (property == null)
             {
                 return NotFound();
             }
 
-            _context.Properties.Remove(@property);
+            _context.Properties.Remove(property);
             await _context.SaveChangesAsync();
 
             return NoContent();

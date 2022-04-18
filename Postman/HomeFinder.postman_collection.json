@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ef29b036-6699-4d09-a23f-722231349961",
+		"_postman_id": "524dd2bb-7e31-43a5-b536-54b71fda2dda",
 		"name": "HomeFinder",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,37 +9,17 @@
 			"name": "Properties",
 			"item": [
 				{
-					"name": "API",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:44359/api/TenureAPI",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44359",
-							"path": [
-								"api",
-								"TenureAPI"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get properties",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/PropertyAPI",
+							"raw": "https://localhost:5001/api/PropertyAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"PropertyAPI"
@@ -49,7 +29,7 @@
 					"response": []
 				},
 				{
-					"name": "Update properties",
+					"name": "Update property",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -63,12 +43,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/PropertyAPI/1",
+							"raw": "https://localhost:5001/api/PropertyAPI/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"PropertyAPI",
@@ -79,7 +59,7 @@
 					"response": []
 				},
 				{
-					"name": "Create properties",
+					"name": "Create property",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -93,12 +73,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/PropertyAPI",
+							"raw": "https://localhost:5001/api/PropertyAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"PropertyAPI"
@@ -108,17 +88,17 @@
 					"response": []
 				},
 				{
-					"name": "Delete properties",
+					"name": "Delete property",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/PropertyAPI/6",
+							"raw": "https://localhost:5001/api/PropertyAPI/6",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"PropertyAPI",
@@ -139,12 +119,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/AdressAPI",
+							"raw": "https://localhost:5001/api/AdressAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"AdressAPI"
@@ -168,12 +148,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/AdressAPI",
+							"raw": "https://localhost:5001/api/AdressAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"AdressAPI"
@@ -183,7 +163,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Update adress",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -197,12 +177,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/AdressAPI/2",
+							"raw": "https://localhost:5001/api/AdressAPI/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"AdressAPI",
@@ -213,96 +193,21 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete adress",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/AdressAPI/2",
+							"raw": "https://localhost:5001/api/AdressAPI/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"AdressAPI",
 								"2"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "PropertyType",
-			"item": [
-				{
-					"name": "Get propertyTypes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:44359/api/PropertyTypeAPI",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44359",
-							"path": [
-								"api",
-								"PropertyTypeAPI"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "SaleStatus",
-			"item": [
-				{
-					"name": "Get saleStatuses",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:44359/api/SaleStatusAPI",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44359",
-							"path": [
-								"api",
-								"SaleStatusAPI"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Tenure",
-			"item": [
-				{
-					"name": "Get tenures",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:44359/api/TenureAPI",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "44359",
-							"path": [
-								"api",
-								"TenureAPI"
 							]
 						}
 					},
@@ -319,12 +224,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/ImageAPI",
+							"raw": "https://localhost:5001/api/ImageAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"ImageAPI"
@@ -340,7 +245,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \r\n        \"url\": \"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse\",\r\n        \"propertyId\": 1,\r\n        \"property\": null\r\n    }",
+							"raw": "{\r\n    \"url\": \"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse\",\r\n    \"propertyId\": 1,\r\n    \"property\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,12 +253,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/ImageAPI",
+							"raw": "https://localhost:5001/api/ImageAPI",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"ImageAPI"
@@ -377,12 +282,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:44359/api/ImageAPI/2",
+							"raw": "https://localhost:5001/api/ImageAPI/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"ImageAPI",
@@ -398,16 +303,150 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:44359/api/ImageAPI/2",
+							"raw": "https://localhost:5001/api/ImageAPI/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
 							],
-							"port": "44359",
+							"port": "5001",
 							"path": [
 								"api",
 								"ImageAPI",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PropertyInfo",
+			"item": [
+				{
+					"name": "PropertyTypes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/PropertyType",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"PropertyType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific PropertyType",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/PropertyType/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"PropertyType",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaleStatuses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/SaleStatus",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"SaleStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific SaleStatus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/SaleStatus/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"SaleStatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tenures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/Tenure",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"Tenure"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific Tenure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/PropertyInfoApi/Tenure/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"PropertyInfoApi",
+								"Tenure",
+								"1"
 							]
 						}
 					},
