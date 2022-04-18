@@ -141,7 +141,7 @@ else
             @Html.DisplayNameFor(model => model.Property.ExpressionOfInterests)
         </dt>
         <dd class="col-sm-10">
-            @if (Model.ExpressionsOfInterest.Count != 0)
+            @if (Model.ExpressionsOfInterest != null)
             {
                 <ul>
                     @foreach (var e in Model.ExpressionsOfInterest.Where(e => e.PropertyId == Model.Property.Id))

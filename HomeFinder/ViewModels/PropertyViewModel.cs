@@ -9,13 +9,13 @@ namespace HomeFinder.ViewModels
         public Property Property { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public Adress Adress { get; set; }
-        public List<SaleStatus> SaleStatuses { get; set; }
-        public List<Tenure> Tenures { get; set; }
-        public List<PropertyType> PropertyTypes { get; set; }
-        public List<ApplicationUser> EstateAgents { get; set; } = new List<ApplicationUser>();
-        public List<ApplicationUser> Users { get; set; }
-        public List<IFormFile> Images { get; set; }
-        public List<ExpressionOfInterest> ExpressionsOfInterest { get; set; }
+        public List<SaleStatus> SaleStatuses { get; set; } = new();
+        public List<Tenure> Tenures { get; set; } = new();
+        public List<PropertyType> PropertyTypes { get; set; } = new();
+        public List<ApplicationUser> EstateAgents { get; set; } = new();
+        public List<ApplicationUser> Users { get; set; } = new();
+        public List<IFormFile> Images { get; set; } = new();
+        public List<ExpressionOfInterest> ExpressionsOfInterest { get; set; } = new();
         public bool IsInterested { get; set; } = false;
 
     }
