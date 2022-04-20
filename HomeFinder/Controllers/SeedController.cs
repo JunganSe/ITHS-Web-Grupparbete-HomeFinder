@@ -256,7 +256,8 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe"),
+                    NumberOfViews = 60
                 },
                 new Property()
                 {
@@ -275,7 +276,8 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe"),
+                    NumberOfViews = 95
                 },
                 new Property()
                 {
@@ -313,7 +315,8 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(3),
-                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe")
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "micke@kaffe"),
+                    NumberOfViews = 3
                 },
                 new Property()
                 {
@@ -351,7 +354,8 @@ namespace HomeFinder.Controllers
                     PropertyType = await _context.PropertyTypes.FindAsync(5),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
-                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "roy@macken.se")
+                    EstateAgent = await _context.ApplicationUsers.FirstAsync(a => a.UserName == "roy@macken.se"),
+                    NumberOfViews = 10000
                 }
             };
             await _context.Properties.AddRangeAsync(properties);

@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager;
+@model HomeViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -13,7 +14,119 @@
 else
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <h1 class="display-4">Welcome</h1>       
     </div>
 }
+<div class="bigsearchbtn">
+<a class="btn btn-primary" asp-controller="Filter" asp-action="Search">Search for your dream goathome of your dreams HERE</a>
+</div>
+<div>
+    <h4>Top Viewed Houses</h4>
+</div>
+<div class="row">
+        @foreach (var p in Model.Top3Viewed)
+        {
+            // TODO: Byt till rätt bild i headern.
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card my-3">
+
+                    <div class="card-header">
+                        <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
+                        <h6 class="card-subtitle">@p.Adress.PostalCode @p.Adress.City, @p.Adress.Country</h6>
+                        <p class="card-text">
+                            Summary: @p.Summary<br>
+                            Number of Rooms: @p.NumberOfRooms<br>
+                            Area: @p.BuildingArea + @p.BeeArea<br>
+                            Plot Area: @p.PlotArea<br>
+                            Type: @p.PropertyType.Description<br>
+                            Tenure: @p.Tenure.Description<br>
+                            Price: @Math.Round(p.Price)<br>
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+<div>
+    <h4>Thiccest Houses</h4>
+</div>
+<div class="row">
+        @foreach (var p in Model.Top3Size)
+        {
+            // TODO: Byt till rätt bild i headern.
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card my-3">
+
+                    <div class="card-header">
+                        <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
+                        <h6 class="card-subtitle">@p.Adress.PostalCode @p.Adress.City, @p.Adress.Country</h6>
+                        <p class="card-text">
+                            Summary: @p.Summary<br>
+                            Number of Rooms: @p.NumberOfRooms<br>
+                            Area: @p.BuildingArea + @p.BeeArea<br>
+                            Plot Area: @p.PlotArea<br>
+                            Type: @p.PropertyType.Description<br>
+                            Tenure: @p.Tenure.Description<br>
+                            Price: @Math.Round(p.Price)<br>
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+<div>
+    <h4>$$$ Houses</h4>
+</div>
+<div class="row">
+    @foreach (var p in Model.Top3Price)
+    {
+        // TODO: Byt till rätt bild i headern.
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card my-3">
+
+                <div class="card-header">
+                    <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
+                    <h6 class="card-subtitle">@p.Adress.PostalCode @p.Adress.City, @p.Adress.Country</h6>
+                    <p class="card-text">
+                        Summary: @p.Summary<br>
+                        Number of Rooms: @p.NumberOfRooms<br>
+                        Area: @p.BuildingArea + @p.BeeArea<br>
+                        Plot Area: @p.PlotArea<br>
+                        Type: @p.PropertyType.Description<br>
+                        Tenure: @p.Tenure.Description<br>
+                        Price: @Math.Round(p.Price)<br>
+                    </p>
+                </div>
+
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
