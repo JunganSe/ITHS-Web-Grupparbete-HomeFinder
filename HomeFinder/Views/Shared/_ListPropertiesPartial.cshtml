@@ -1,13 +1,14 @@
 ﻿@if (Model != null)
 {
     <div class="row">
-        @foreach (var p in Model.Properties)
+        @foreach (Property p in Model.Properties)
         {
             // TODO: Byt till rätt bild i headern.
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="card my-3">
 
                     <div class="card-header">
+
                         <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
                     </div>
 

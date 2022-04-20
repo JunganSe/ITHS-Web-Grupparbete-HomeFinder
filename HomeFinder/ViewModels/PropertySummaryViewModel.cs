@@ -1,0 +1,11 @@
+﻿using HomeFinder.Models;
+using System.Collections.Generic;
+
+namespace HomeFinder.ViewModels
+{
+    public class PropertySummaryViewModel
+    {
+        public List<Property> Properties { get; set; }
+        public List<Image> Images { get; set; }
+    }
+}

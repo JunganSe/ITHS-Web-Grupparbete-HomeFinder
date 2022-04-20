@@ -36,18 +36,38 @@ namespace HomeFinder.Controllers
         {
             var currentUserId = GetUserId();
 
+            // Hämta alla properties
+            var properties = await _context.Properties
+                .Include(p => p.Adress)
+                .Include(p => p.EstateAgent)
+                .Include(p => p.PropertyType)
+                .Include(p => p.SaleStatus)
+                .Include(p => p.Tenure)
+                .ToListAsync();
+
+            // Skapa ViewModel-lista och fyll på med data.
+            var models = new List<PropertyViewModel>();
+            foreach (var property in properties)
+            {
+                models.Add(new PropertyViewModel
+                {
+                    Property = property,
+                    ImageUrls = await _context.Images
+                        .Where(i => i.PropertyId == property.Id)
+                        .Select(i => i.Url)
+                        .ToListAsync()
+                });
+            }
+
+            // Filtrera properties om användren är mäklare.
             if (IsEstateAgent(currentUserId))
             {
-                var properties = _context.Properties.Include(p => p.Adress).Include(p => p.EstateAgent).Include(p => p.PropertyType).Include(p => p.SaleStatus).Include(p => p.Tenure);
-                var userProperties = properties.Where(u => u.EstateAgentId == currentUserId);
+                models = models
+                    .Where(u => u.Property.EstateAgentId == currentUserId)
+                    .ToList();
+            }
 
-                return View(userProperties.ToList());
-            }
-            else
-            {
-                var homeFinderContext = _context.Properties.Include(p => p.Adress).Include(p => p.EstateAgent).Include(p => p.PropertyType).Include(p => p.SaleStatus).Include(p => p.Tenure);
-                return View(await homeFinderContext.ToListAsync());
-            }
+            return View(models);
 
         }
 
@@ -72,14 +92,26 @@ namespace HomeFinder.Controllers
             {
                 return NotFound();
             }
+
             PropertyViewModel propertyViewModel = CreatePropertyViewModel();
             propertyViewModel.Property = property;
 
+            // Hämta relevanta bild-url för att skicka in i ViewModel.
+            foreach (Image i in _context.Images.ToList())
+            {
+                if (i.PropertyId == property.Id)
+                {
+                    propertyViewModel.ImageUrls.Add(i.Url);
+                }
+            }
+
+            // Visa rätt sak beroende på vem som är inloggad.
             if (User.Identity.Name != null)
             {
 
                 var currentUserId = GetUserId();
 
+                //Kollar om inloggad användare är mäklare, och isåfall om hen är mäklaren för denna bostad.
                 if (IsEstateAgent(currentUserId))
                 {
                     if (currentUserId != (_context.Properties.FirstOrDefault(p => p.Id == id)).EstateAgentId)
@@ -92,7 +124,9 @@ namespace HomeFinder.Controllers
                     }
 
                 }
-                else
+
+                //Annars visar den om inloggad användare har anmält intresse.
+                else if (_userManager.IsInRoleAsync(_context.ApplicationUsers.FirstOrDefault(u => u.Id == currentUserId), "User").Result == true)
                 {
                     propertyViewModel.ApplicationUser = await _userManager.GetUserAsync(User);
 
@@ -146,6 +180,7 @@ namespace HomeFinder.Controllers
                 await _context.SaveChangesAsync();
 
 
+                // Ladda upp bild
                 string uniqueFileName = null;
                 if (propertyViewModel.Images != null)
                 {
@@ -158,10 +193,10 @@ namespace HomeFinder.Controllers
 
                         _context.Images.Add(new Image
                         {
-                            Url = uniqueFileName,
+                            Url = "/images/" + uniqueFileName,
                             PropertyId = newProperty.Id
-
                         });
+
                         await _context.SaveChangesAsync();
                     }
 

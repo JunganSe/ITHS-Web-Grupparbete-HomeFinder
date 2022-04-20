@@ -3,6 +3,7 @@
 @inject HomeFinderContext _context
 
 @{
+    // TODO: Få bort context från denna fil.
     ViewData["Title"] = "Create";
 }
 
@@ -146,17 +147,16 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<!-- Visa filnamnen för de filer som valts i uppladdningsrutan. -->
 @section Scripts {
-    @{
-        <script>
-            $(document).ready(function () {
-                $('.custom-file-input').on("change", function () {
-                    var fileName = $(this).val().split("\\").pop();
-                    $(this).next('.custom-file-label').html(fileName);
-                });
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
             });
-        </script>
+        });
+    </script>
 
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
 }

@@ -1,11 +1,9 @@
 ﻿@using HomeFinder.Data
-@model IEnumerable<HomeFinder.Models.Property>
-@inject HomeFinderContext _context
+@model List<PropertyViewModel>
 
 
 @{
     ViewData["Title"] = "Index";
-    var filePath = "/images/";
 }
 
 <h1>Index</h1>
@@ -13,132 +11,139 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                Images
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Summary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfRooms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BuildingArea)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlotArea)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConstructionYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfViews)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MapUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ViewingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropertyType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tenure)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SaleStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstateAgent)
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (Model == null)
+{
+   <p>There are no properties!</p> 
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-controller="Properties" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @foreach(var i in _context.Images.Where(a=>a.PropertyId == item.Id))
-                    {
-                        <img src="@(filePath + i.Url)" width="100">
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Summary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfRooms)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BuildingArea)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PlotArea)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConstructionYear)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfViews)
-                </td>
-                <td>
-                    <iframe src="@item.MapUrl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PublishingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ViewingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adress.Street) @Html.DisplayFor(modelItem => item.Adress.StreetNumber) <br>
-                    @Html.DisplayFor(modelItem => item.Adress.PostalCode) @Html.DisplayFor(modelItem => item.Adress.City)  <br>
-                    @Html.DisplayFor(modelItem => item.Adress.Country)
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PropertyType.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tenure.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SaleStatus.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstateAgent.FirstName) @Html.DisplayFor(modelItem => item.EstateAgent.LastName)
-                </td>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.Description)
+                </th>
+                <th>
+                    Images
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.Summary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.NumberOfRooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.BuildingArea)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.PlotArea)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.ConstructionYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.NumberOfViews)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.MapUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.PublishingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.ViewingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.Adress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.PropertyType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.Tenure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.SaleStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Property.EstateAgent)
+                </th>
 
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Properties" asp-action="Edit" asp-route-id="@item.Property.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Property.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Property.Id">Delete</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Description)
+                    </td>
+                    <td>
+                        @foreach(var i in item.ImageUrls)
+                        {
+                            <img src="@(i)" width="100">
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Summary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.NumberOfRooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.BuildingArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.PlotArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.ConstructionYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.NumberOfViews)
+                    </td>
+                    <td>
+                        <iframe src="@item.Property.MapUrl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.PublishingDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.ViewingDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adress.Street) @Html.DisplayFor(modelItem => item.Adress.StreetNumber) <br>
+                        @Html.DisplayFor(modelItem => item.Adress.PostalCode) @Html.DisplayFor(modelItem => item.Adress.City)  <br>
+                        @Html.DisplayFor(modelItem => item.Adress.Country)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.PropertyType.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.Tenure.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.SaleStatus.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Property.EstateAgent.FirstName) @Html.DisplayFor(modelItem => item.Property.EstateAgent.LastName)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
