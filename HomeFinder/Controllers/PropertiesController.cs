@@ -45,29 +45,22 @@ namespace HomeFinder.Controllers
                 .Include(p => p.Tenure)
                 .ToListAsync();
 
-            // Skapa ViewModel-lista och fyll på med data.
-            var models = new List<PropertyViewModel>();
-            foreach (var property in properties)
-            {
-                models.Add(new PropertyViewModel
-                {
-                    Property = property,
-                    ImageUrls = await _context.Images
-                        .Where(i => i.PropertyId == property.Id)
-                        .Select(i => i.Url)
-                        .ToListAsync()
-                });
-            }
+            // Skapa ViewModel med listor för properties och bilder.
+            var model = new PropertySummaryViewModel();
+            model.Properties = properties;
+            model.Images = _context.Images
+                .Where(i => i.DisplayImage == true)
+                .ToList();
 
             // Filtrera properties om användren är mäklare.
             if (IsEstateAgent(currentUserId))
             {
-                models = models
-                    .Where(u => u.Property.EstateAgentId == currentUserId)
+                model.Properties = model.Properties
+                    .Where(u => u.EstateAgentId == currentUserId)
                     .ToList();
             }
 
-            return View(models);
+            return View(model);
 
         }
 
@@ -93,6 +86,10 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
 
+            property.NumberOfViews++;
+            await _context.SaveChangesAsync();
+
+
             PropertyViewModel propertyViewModel = CreatePropertyViewModel();
             propertyViewModel.Property = property;
 
@@ -108,7 +105,6 @@ namespace HomeFinder.Controllers
             // Visa rätt sak beroende på vem som är inloggad.
             if (User.Identity.Name != null)
             {
-
                 var currentUserId = GetUserId();
 
                 //Kollar om inloggad användare är mäklare, och isåfall om hen är mäklaren för denna bostad.
@@ -122,7 +118,6 @@ namespace HomeFinder.Controllers
                     {
                         propertyViewModel.ExpressionsOfInterest = _context.ExpressionOfInterests.ToList();
                     }
-
                 }
 
                 //Annars visar den om inloggad användare har anmält intresse.
@@ -137,7 +132,6 @@ namespace HomeFinder.Controllers
                         propertyViewModel.IsInterested = true;
                     }
                 }
-
             }
 
             return View(propertyViewModel);
@@ -146,7 +140,6 @@ namespace HomeFinder.Controllers
         // GET: Properties/Create
         public IActionResult Create()
         {
-
             PropertyViewModel propertyViewModel = CreatePropertyViewModel();
 
             return View(propertyViewModel);
@@ -186,26 +179,39 @@ namespace HomeFinder.Controllers
                 {
                     foreach (var i in propertyViewModel.Images)
                     {
-                        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+                        string relativePath = "/images/properties/" + newProperty.Id.ToString();
+                        //string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images", "properties", newProperty.Id.ToString());
+                        string uploadsFolder = _hostEnvironment.WebRootPath + relativePath;
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
                         uniqueFileName = Guid.NewGuid().ToString() + "_" + i.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                         i.CopyTo(new FileStream(filePath, FileMode.Create));
 
                         _context.Images.Add(new Image
                         {
-                            Url = "/images/" + uniqueFileName,
+                            Url = Path.Combine(relativePath, uniqueFileName),
                             PropertyId = newProperty.Id
                         });
 
                         await _context.SaveChangesAsync();
                     }
-
+                    var image = await _context.Images.FirstOrDefaultAsync(i => i.PropertyId == newProperty.Id);
+                    if (image != null)
+                    {
+                        image.DisplayImage = true;
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
 
                 return RedirectToAction(nameof(Index));
 
             }
+            // TODO: Hantera error om Modelstate inte är valid.
 
             return View();
         }
