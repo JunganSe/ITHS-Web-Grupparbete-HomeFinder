@@ -31,7 +31,18 @@ else
                 <div class="card my-3">
 
                     <div class="card-header">
-                        <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                    @{
+                        List<Image> images = Model.Images;
+                        var image = images.Find(i => i.PropertyId == p.Id);
+                            if (image != null)
+                            {
+                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
+                            }
+                            else
+                            {
+                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                            }
+                        }
                     </div>
 
                     <div class="card-body">
@@ -68,8 +79,19 @@ else
                 <div class="card my-3">
 
                     <div class="card-header">
-                        <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                    </div>
+                    @{
+                        List<Image> images = Model.Images;
+                        var image = images.Find(i => i.PropertyId == p.Id);
+                            if (image != null)
+                            {
+                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
+                            }
+                            else
+                            {
+                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                            }
+                        }
+                    </div>>
 
                     <div class="card-body">
                         <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
@@ -98,15 +120,26 @@ else
     <h4>$$$ Houses</h4>
 </div>
 <div class="row">
-    @foreach (var p in Model.Top3Price)
+    @foreach (Property p in Model.Top3Price)
     {
         // TODO: Byt till rätt bild i headern.
         <div class="col-12 col-md-6 col-xl-4">
             <div class="card my-3">
 
                 <div class="card-header">
-                    <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                </div>
+                    @{
+                        List<Image> images = Model.Images;
+                        var image = images.Find(i => i.PropertyId == p.Id);
+                            if (image != null)
+                            {
+                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
+                            }
+                            else
+                            {
+                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                            }
+                        }
+                    </div>
 
                 <div class="card-body">
                     <h5 class="card-title">@p.Adress.Street @p.Adress.StreetNumber</h5>
