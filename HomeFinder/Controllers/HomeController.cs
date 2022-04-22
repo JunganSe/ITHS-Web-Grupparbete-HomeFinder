@@ -31,6 +31,7 @@ namespace HomeFinder.Controllers
             var sortPropViews = properties.OrderByDescending(p => p.NumberOfViews).ToList();
             var sortPropSize = properties.OrderByDescending(p => p.BuildingArea + p.BeeArea).ToList();
             var sortPrice = properties.OrderByDescending(p => p.Price).ToList();
+            var images = _context.Images.Where(p => p.DisplayImage == true).ToList();
 
             var top3ListViews = new List<Property>();
             var top3ListSize = new List<Property>();
@@ -42,7 +43,7 @@ namespace HomeFinder.Controllers
                 top3ListSize.Add(sortPropSize[i]);
                 top3ListPrice.Add(sortPrice[i]);
             }
-
+            homeViewModel.Images = images;
             homeViewModel.Top3Price = top3ListPrice;
             homeViewModel.Top3Size = top3ListSize;
             homeViewModel.Top3Viewed = top3ListViews;
