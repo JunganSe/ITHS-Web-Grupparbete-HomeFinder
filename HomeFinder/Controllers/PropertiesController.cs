@@ -363,8 +363,6 @@ namespace HomeFinder.Controllers
             propertyViewModel.Tenures = _context.Tenures.ToList();
             propertyViewModel.PropertyTypes = _context.PropertyTypes.ToList();
 
-            //TODO: Lägg till att bara mäklare ska dyka upp i listan nedan!
-
             propertyViewModel.Users = _context.ApplicationUsers.ToList();
 
             foreach (var u in propertyViewModel.Users)

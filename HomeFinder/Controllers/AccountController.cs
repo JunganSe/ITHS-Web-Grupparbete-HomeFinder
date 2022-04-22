@@ -155,7 +155,6 @@ namespace HomeFinder.Controllers
 
                     return LocalRedirect(returnUrl);
                 }
-                //TODO: ViewData? Lägg till mail för support
                 ViewBag.ErrorTitle = $"Email claim not recived from: {info.LoginProvider}";
                 ViewBag.ErrorMessage = "Please contact support at Goat@Goats.bah";
 
