@@ -17,6 +17,7 @@ namespace HomeFinder.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         [HttpPost]
         public IActionResult Search(int minRooms, string city, int maxRooms, int selectedPropertyType, string zipCode, int minArea, int maxArea,
@@ -28,25 +29,25 @@ namespace HomeFinder.Controllers
             var tenures = _context.Tenures.Select(t => t).ToList();
             filterViewModel.Tenures = tenures;
             filterViewModel.PropertyTypes = propertyTypes;
-            if(!string.IsNullOrEmpty(city))
+            if (!string.IsNullOrEmpty(city))
             {
-                properties =  properties.Where(p => p.Adress.City.Contains(city)).ToList();
-                
+                properties = properties.Where(p => p.Adress.City.Contains(city)).ToList();
+
             }
             if (minRooms != 0)
-            {                
+            {
                 properties = properties.Where(p => p.NumberOfRooms >= minRooms).ToList();
 
             }
             if (maxRooms != 0)
             {
-                
+
                 properties = properties.Where(p => p.NumberOfRooms <= maxRooms).ToList();
 
             }
             if (!string.IsNullOrEmpty(zipCode))
             {
-               
+
                 properties = properties.Where(p => p.Adress.PostalCode == zipCode).ToList();
 
             }
@@ -86,11 +87,17 @@ namespace HomeFinder.Controllers
                 properties = properties.Where(p => p.Price <= maxPrice).ToList();
             }
 
+
+
             filterViewModel.Properties = properties;
+            filterViewModel.Images = _context.Images
+                            .Where(i => i.DisplayImage == true)
+                            .ToList();
+
             return View(filterViewModel);
 
         }
 
-        
+
     }
 }

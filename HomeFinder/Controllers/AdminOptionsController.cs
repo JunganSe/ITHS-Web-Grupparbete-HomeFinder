@@ -15,6 +15,7 @@ namespace HomeFinder.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+
         public AdminOptionsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -123,12 +124,14 @@ namespace HomeFinder.Controllers
         //Controllers till Roles
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -165,6 +168,7 @@ namespace HomeFinder.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> EditRole(string id)
         {
             // Find the role by Role ID
@@ -198,6 +202,7 @@ namespace HomeFinder.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
@@ -229,6 +234,7 @@ namespace HomeFinder.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -337,4 +343,3 @@ namespace HomeFinder.Controllers
         }
     }
 }
-
