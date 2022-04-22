@@ -168,7 +168,6 @@ namespace HomeFinder.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> EditRole(string id)
         {
             // Find the role by Role ID
@@ -202,7 +201,6 @@ namespace HomeFinder.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
