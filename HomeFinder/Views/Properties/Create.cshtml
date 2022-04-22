@@ -3,6 +3,7 @@
 @inject HomeFinderContext _context
 
 @{
+    // TODO: Få bort context från denna fil.
     ViewData["Title"] = "Create";
 }
 
@@ -94,6 +95,7 @@
                 <select asp-for="Property.PropertyTypeId" class="form-control">
                     @for (int i = 0; i < Model.PropertyTypes.Count; i++)
                     {
+                        // TODO: Gör så att det krävs att man väljer något i rullgardinerna, annars blir det krash.
                         <option value="@Model.PropertyTypes[i].Id">@Model.PropertyTypes[i].Description</option>
                     }
                 </select>
@@ -146,17 +148,16 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<!-- Visa filnamnen för de filer som valts i uppladdningsrutan. -->
 @section Scripts {
-    @{
-        <script>
-            $(document).ready(function () {
-                $('.custom-file-input').on("change", function () {
-                    var fileName = $(this).val().split("\\").pop();
-                    $(this).next('.custom-file-label').html(fileName);
-                });
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
             });
-        </script>
+        });
+    </script>
 
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
 }

@@ -137,30 +137,44 @@ else
         <dd class="col-sm-10">
             @Html.DisplayFor(model=> model.Property.EstateAgent.FirstName) @Html.DisplayFor(model=>model.Property.EstateAgent.LastName)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Property.ExpressionOfInterests)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.ExpressionsOfInterest != null)
-            {
-                <ul>
-                    @foreach (var e in Model.ExpressionsOfInterest.Where(e => e.PropertyId == Model.Property.Id))
-                    {
-                        <li>
-                            <p>
+
+        @* Visa intresseanmälningar om inloggad användare är mäklare eller admin. *@
+        @if (signInManager.IsSignedIn(User) 
+            && (User.IsInRole("EstateAgent") || User.IsInRole("Admin")))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Property.ExpressionOfInterests)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.ExpressionsOfInterest != null
+                && Model.ExpressionsOfInterest.Count != 0)
+                {
+                    <ul>
+                        @foreach (var e in Model.ExpressionsOfInterest.Where(e => e.PropertyId == Model.Property.Id))
+                        {
+                            <li>
                                 @Model.Users.FirstOrDefault(u=>u.Id == e.ApplicationUserId).FirstName
                                 @Model.Users.FirstOrDefault(u=>u.Id == e.ApplicationUserId).LastName
-                            </p>
-                        </li>
-                    }
-                </ul>
-            }
+                                <br>
+                            </li>
+                        }
+                    </ul>
+                }
+            </dd>
+        }
 
-
-        </dd>
     </dl>
 </div>
-<div>
 
+@* Bilder *@
+<div>
+    @foreach(var imageUrl in Model.ImageUrls)
+    {
+        <img src="@(imageUrl)" alt="Image of property" width="500">
+        <br />
+    }
+</div>
+
+<div>
     <a asp-action="Index">Back to List</a>
 </div>

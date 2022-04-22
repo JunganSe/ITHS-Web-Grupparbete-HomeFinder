@@ -9,6 +9,8 @@ namespace HomeFinder.Models
         [Required]
         public string Url { get; set; }
 
+        public bool DisplayImage { get; set; } = false;
+
         // Foreign keys
         public int PropertyId { get; set; }
         public Property Property { get; set; }

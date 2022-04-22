@@ -17,6 +17,6 @@ namespace HomeFinder.ViewModels
         public List<IFormFile> Images { get; set; } = new();
         public List<ExpressionOfInterest> ExpressionsOfInterest { get; set; } = new();
         public bool IsInterested { get; set; } = false;
-
+        public List<string> ImageUrls { get; set; } = new();
     }
 }

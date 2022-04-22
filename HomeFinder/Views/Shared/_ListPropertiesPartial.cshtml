@@ -1,14 +1,24 @@
 ﻿@if (Model != null)
 {
     <div class="row">
-        @foreach (var p in Model.Properties)
+        @foreach (Property p in Model.Properties)
         {
-            // TODO: Byt till rätt bild i headern.
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="card my-3">
 
                     <div class="card-header">
-                        <img src="~/images/bootyfulhouse.png" alt="Image of property" style="width:100%">
+                        @{
+                            List<Image> images = Model.Images;
+                            var image = images.Find(i => i.PropertyId == p.Id);
+                            if (image != null)
+                            {
+                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
+                            }
+                            else
+                            {
+                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                            }
+                        }
                     </div>
 
                     <div class="card-body">
@@ -24,7 +34,7 @@
                             Price: @Math.Round(p.Price)<br>
                         </p>
                     </div>
-                    
+
                     <div class="card-footer">
                         <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
                     </div>
