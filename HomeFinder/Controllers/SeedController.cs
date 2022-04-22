@@ -50,6 +50,7 @@ namespace HomeFinder.Controllers
             await _context.SaveChangesAsync();
             await SeedPropertiesAsync();
             await _context.SaveChangesAsync();
+            await SeedImagesAsync();
             await SeedExpressionOfInterestsAsync();
 
             await _context.SaveChangesAsync();
@@ -359,6 +360,117 @@ namespace HomeFinder.Controllers
                 }
             };
             await _context.Properties.AddRangeAsync(properties);
+        }
+
+        private async Task SeedImagesAsync()
+        {
+            var properties = await _context.Properties.ToListAsync();
+
+            List<Image> images = new()
+            {
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-1.png",
+                    Property = properties[0],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-1.png",
+                    Property = properties[0]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-2.png",
+                    Property = properties[0]
+                },
+
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-2.png",
+                    Property = properties[1],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-2.png",
+                    Property = properties[1]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-3.png",
+                    Property = properties[1]
+                },
+
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-3.png",
+                    Property = properties[2],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-3.png",
+                    Property = properties[2]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-4.png",
+                    Property = properties[2]
+                },
+
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-4.png",
+                    Property = properties[3],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-4.png",
+                    Property = properties[3]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-1.png",
+                    Property = properties[3]
+                },
+
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-1.png",
+                    Property = properties[4],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-2.png",
+                    Property = properties[4]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-3.png",
+                    Property = properties[4]
+                },
+
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-2.png",
+                    Property = properties[5],
+                    DisplayImage = true
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-3.png",
+                    Property = properties[5]
+                },
+                new Image()
+                {
+                    Url = "/images/properties/default/default-house-interior-1.png",
+                    Property = properties[5]
+                }
+            };
+            await _context.Images.AddRangeAsync(images);
         }
 
         private async Task SeedExpressionOfInterestsAsync()
