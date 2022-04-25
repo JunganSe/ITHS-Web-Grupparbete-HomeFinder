@@ -154,6 +154,8 @@ namespace HomeFinder.Controllers
         {
             Property newProperty = new();
 
+
+
             if (ModelState.IsValid)
             {
                 Adress newAdress = propertyViewModel.Adress;
@@ -211,9 +213,12 @@ namespace HomeFinder.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            // TODO: Hantera error om Modelstate inte är valid.
+            else
+            {
+                return BadRequest("No correct info, pliz fix.");
+            }
 
-            return View();
+            //return View();
         }
 
         // GET: Properties/Edit/5
