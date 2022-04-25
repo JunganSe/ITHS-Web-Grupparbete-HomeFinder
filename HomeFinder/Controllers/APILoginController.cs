@@ -18,19 +18,21 @@ namespace HomeFinder.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class APILoginController : ControllerBase
     {
         private IConfiguration _config;
         private readonly HomeFinderContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
 
-        public LoginController(IConfiguration config, RoleManager<IdentityRole> roleManager, HomeFinderContext context, SignInManager<IdentityUser> signInManager)
+        public APILoginController(IConfiguration config, HomeFinderContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _config = config;
-            _roleManager = roleManager;
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
             _signInManager = signInManager;
         }
 
