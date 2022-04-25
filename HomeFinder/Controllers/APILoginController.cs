@@ -37,6 +37,7 @@ namespace HomeFinder.Controllers
         }
 
         [AllowAnonymous]
+        [Route("~/api/login")]
         [HttpPost]
         public IActionResult Login([FromBody] LoginViewModel userLogin)
         {

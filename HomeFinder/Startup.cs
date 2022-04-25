@@ -46,6 +46,7 @@ namespace HomeFinder
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = new PathString("/Account/Login");
+                options.LogoutPath = new PathString("/Account/Logout");
                 options.AccessDeniedPath = new PathString("/Account/AccessDenied");
 
                 options.Events.OnRedirectToLogin = context =>
@@ -59,11 +60,24 @@ namespace HomeFinder
                     context.Response.Redirect(context.RedirectUri);
                     return Task.CompletedTask;
                 };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    if (context.Request.Path.Value.Contains("api"))
+                    {
+                        context.Response.Clear();
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        return Task.CompletedTask;
+                    }
+                    context.Response.Redirect(context.RedirectUri);
+                    return Task.CompletedTask;
+                };
+
             });
 
             //Web-API inlogg med Jwt
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -83,7 +97,7 @@ namespace HomeFinder
                     options.ClientId = "489054105101-0rffu1j2l6set0agmumpnji7i0jjrj96.apps.googleusercontent.com";
                     options.ClientSecret = "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";
                 });
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
