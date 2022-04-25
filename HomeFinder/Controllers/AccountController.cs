@@ -90,7 +90,38 @@ namespace HomeFinder.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        // 
+
+        // POST: /Account/Login
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
+        {
+            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+
+
+                if (result.Succeeded) // Om det gick bra att logga in:
+                {
+                    if ((!string.IsNullOrEmpty(returnUrl))
+                        && (Url.IsLocalUrl(returnUrl))) // (säkerhetskontroll)
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else // Om det inte gick att logga in:
+                {
+                    ModelState.AddModelError("", "Login failed.");
+                }
+            }
+
+            return View(model);
+        }
+
+        // Google-inlogg
         [HttpPost]
         public IActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -162,36 +193,6 @@ namespace HomeFinder.Controllers
                 
             }
         }
-
-        // POST: /Account/Login
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
-        {
-            if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
-            {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-
-
-                if (result.Succeeded) // Om det gick bra att logga in:
-                {
-                    if ((!string.IsNullOrEmpty(returnUrl))
-                        && (Url.IsLocalUrl(returnUrl))) // (säkerhetskontroll)
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else // Om det inte gick att logga in:
-                {
-                    ModelState.AddModelError("", "Login failed.");
-                }
-            }
-
-            return View(model);
-        }
-
 
 
         // GET: /Account/Logout
