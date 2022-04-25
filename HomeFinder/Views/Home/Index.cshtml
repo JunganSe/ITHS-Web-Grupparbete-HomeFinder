@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @if(signInManager.IsSignedIn(User))
 {
     <div class="text-center">
@@ -59,7 +60,7 @@ else
                     </div>
                     
                     <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
                     </div>
 
                 </div>
@@ -106,7 +107,7 @@ else
                     </div>
                     
                     <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
                     </div>
 
                 </div>
@@ -153,7 +154,7 @@ else
                 </div>
 
                 <div class="card-footer">
-                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-id="@p.Id">Details</a>
+                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
                 </div>
 
             </div>

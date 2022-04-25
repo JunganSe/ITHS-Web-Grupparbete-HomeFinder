@@ -65,9 +65,10 @@ namespace HomeFinder.Controllers
         }
 
 
+
         // GET: Properties/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, string returnUrl)
         {
             if (id == null)
             {
@@ -86,7 +87,13 @@ namespace HomeFinder.Controllers
                 return NotFound();
             }
 
-            property.NumberOfViews++;
+            if ((!string.IsNullOrEmpty(returnUrl))
+                && (Url.IsLocalUrl(returnUrl))) // (säkerhetskontroll)
+            {
+                ViewData["ReturnUrl"] = returnUrl;
+            }
+
+                property.NumberOfViews++;
             await _context.SaveChangesAsync();
 
 

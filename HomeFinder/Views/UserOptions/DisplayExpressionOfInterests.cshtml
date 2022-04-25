@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" class="btn btn-primary">Details</a>
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@property.Id">Details</a>
                     </div>
 
                 </div>
