@@ -12,29 +12,5 @@
 }
 <a class="btn btn-warning mb-3" asp-controller="UserOptions" asp-action="Index">Back</a>
 
-<div class="row">
-    @foreach (var property in Model.Properties)
-    {
-        if (property.SaleStatusId == Model.SaleStatuses["For sale"])
-        { 
-            // TODO: Lägg in rätt bild 4 rader ner.
-            <div class="col-4">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <img src="~/images/properties/default/bootyfulhouse.png" alt="bild ju!" style="width:100%">
-                    </div>
-                    
-                    <div class="card-body">
-                        <h2>@property.Address.Street @property.Address.StreetNumber, @property.Address.City</h2>
-                        <p>@property.Summary</p>
-                    </div>
-
-                    <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@property.Id">Details</a>
-                    </div>
-
-                </div>
-            </div>
-        }
-    }
-</div>
+<hr />
+<partial name="_ListPropertiesPartial" />

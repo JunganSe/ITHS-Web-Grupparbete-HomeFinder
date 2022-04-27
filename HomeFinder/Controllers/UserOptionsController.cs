@@ -130,15 +130,20 @@ namespace HomeFinder.Controllers
             
             var model = new DisplayExpressionOfInterestsViewModel()
             {
-                SaleStatuses = saleStatuses,
-
-                // Hämta alla properties vars id finns i propertyIds-listan.
+                // Hämta alla properties vars id finns i propertyIds-listan, men bara de som är till salu.
                 Properties = _context.Properties
                     .Include(p => p.Address)
+                    .Include(p => p.PropertyType)
+                    .Include(p => p.Tenure)
+                    .Where(p => p.SaleStatusId == saleStatuses["For sale"])
                     .ToList()
                     .FindAll(p => propertyIds
-                        .Contains(p.Id))
-            };
+                        .Contains(p.Id)),
+                
+                Images = _context.Images
+                    .Where(i => i.DisplayImage == true)
+                    .ToList()
+        };
 
             return View(model);
         }

@@ -1,7 +1,9 @@
 ﻿@if (Model != null)
 {
+    // Kräver att Model.Properties är av typ List<Property>.
+    // Kräver att Model.Images är av typ List<Image>. Den förväntas vara filtrerad med bara visningsbilder.
     <div class="row">
-        @foreach (Property p in Model.Properties)
+        @foreach (Property property in Model.Properties)
         {
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="card my-3">
@@ -9,7 +11,7 @@
                     <div class="card-header">
                         @{
                             List<Image> images = Model.Images;
-                            var image = images.Find(i => i.PropertyId == p.Id);
+                            var image = images.Find(i => i.PropertyId == property.Id);
                             if (image != null)
                             {
                                 <img src="@(image.Url)" alt="Image of property" style="width:100%">
@@ -22,21 +24,21 @@
                     </div>
 
                     <div class="card-body">
-                        <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                        <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
+                        <h5 class="card-title">@property.Address.Street @property.Address.StreetNumber</h5>
+                        <h6 class="card-subtitle">@property.Address.PostalCode @property.Address.City, @property.Address.Country</h6>
                         <p class="card-text">
-                            Summary: @p.Summary<br>
-                            Number of Rooms: @p.NumberOfRooms<br>
-                            Area: @p.BuildingArea + @p.BeeArea<br>
-                            Plot Area: @p.PlotArea<br>
-                            Type: @p.PropertyType.Description<br>
-                            Tenure: @p.Tenure.Description<br>
-                            Price: @Math.Round(p.Price)<br>
+                            Summary: @property.Summary<br>
+                            Number of Rooms: @property.NumberOfRooms<br>
+                            Area: @property.BuildingArea + @property.BeeArea<br>
+                            Plot Area: @property.PlotArea<br>
+                            Type: @property.PropertyType.Description<br>
+                            Tenure: @property.Tenure.Description<br>
+                            Price: @Math.Round(property.Price)<br>
                         </p>
                     </div>
 
                     <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
+                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@property.Id">Details</a>
                     </div>
 
                 </div>
