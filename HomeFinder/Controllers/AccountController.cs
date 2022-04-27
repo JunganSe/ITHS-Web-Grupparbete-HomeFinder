@@ -40,7 +40,7 @@ namespace HomeFinder.Controllers
 
         // POST: /Account/Create
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAccountModel model)
+        public async Task<IActionResult> Create(CreateAccountViewModel model)
         {
             if (ModelState.IsValid) // Om alla properties validerar med sina attributes:
             {

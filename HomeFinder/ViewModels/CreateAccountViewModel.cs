@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace HomeFinder.ViewModels
 {
-    public class CreateAccountModel
+    public class CreateAccountViewModel
     {
         [Required]
         [EmailAddress]
