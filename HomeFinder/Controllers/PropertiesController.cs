@@ -38,7 +38,7 @@ namespace HomeFinder.Controllers
 
             // Hämta alla properties
             var properties = await _context.Properties
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.EstateAgent)
                 .Include(p => p.PropertyType)
                 .Include(p => p.SaleStatus)
@@ -76,7 +76,7 @@ namespace HomeFinder.Controllers
             }
 
             var property = await _context.Properties
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.EstateAgent)
                 .Include(p => p.PropertyType)
                 .Include(p => p.SaleStatus)
@@ -163,7 +163,7 @@ namespace HomeFinder.Controllers
 
             if (ModelState.IsValid)
             {
-                Adress newAdress = propertyViewModel.Adress;
+                Address newAdress = propertyViewModel.Address;
                 _context.Adresses.Add(newAdress);
                 await _context.SaveChangesAsync();
 
@@ -172,8 +172,8 @@ namespace HomeFinder.Controllers
                 newProperty.NumberOfViews = 0;
 
 
-                newProperty.Adress = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
-                newProperty.AdressId = newProperty.Adress.Id;
+                newProperty.Address = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
+                newProperty.AddressId = newProperty.Address.Id;
 
 
                 _context.Add(newProperty);
@@ -247,7 +247,7 @@ namespace HomeFinder.Controllers
             }
 
             propertyViewModel.Property = property;
-            propertyViewModel.Adress = await _context.Adresses.FindAsync(property.AdressId);
+            propertyViewModel.Address = await _context.Adresses.FindAsync(property.AddressId);
 
             return View(propertyViewModel);
         }
@@ -272,24 +272,24 @@ namespace HomeFinder.Controllers
                 {
                     property = propertyViewModel.Property;
 
-                    Adress adress = _context.Adresses.FirstOrDefault(a => a.Street == propertyViewModel.Adress.Street &&
-                                                                    a.StreetNumber == propertyViewModel.Adress.StreetNumber &&
-                                                                    a.PostalCode == propertyViewModel.Adress.PostalCode &&
-                                                                    a.City == propertyViewModel.Adress.City &&
-                                                                    a.Country == propertyViewModel.Adress.Country);
+                    Address adress = _context.Adresses.FirstOrDefault(a => a.Street == propertyViewModel.Address.Street &&
+                                                                    a.StreetNumber == propertyViewModel.Address.StreetNumber &&
+                                                                    a.PostalCode == propertyViewModel.Address.PostalCode &&
+                                                                    a.City == propertyViewModel.Address.City &&
+                                                                    a.Country == propertyViewModel.Address.Country);
 
                     if (adress != null)
                     {
-                        property.AdressId = adress.Id;
+                        property.AddressId = adress.Id;
                     }
                     else
                     {
-                        Adress newAdress = propertyViewModel.Adress;
+                        Address newAdress = propertyViewModel.Address;
                         _context.Adresses.Add(newAdress);
                         await _context.SaveChangesAsync();
 
-                        property.Adress = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
-                        property.AdressId = property.Adress.Id;
+                        property.Address = await _context.Adresses.OrderBy(a => a.Id).LastAsync();
+                        property.AddressId = property.Address.Id;
                     }
 
 
@@ -331,7 +331,7 @@ namespace HomeFinder.Controllers
             }
 
             var property = await _context.Properties
-                .Include(p => p.Adress)
+                .Include(p => p.Address)
                 .Include(p => p.EstateAgent)
                 .Include(p => p.PropertyType)
                 .Include(p => p.SaleStatus)

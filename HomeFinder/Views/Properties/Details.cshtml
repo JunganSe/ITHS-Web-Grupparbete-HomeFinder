@@ -1,4 +1,4 @@
-﻿@model HomeFinder.ViewModels.PropertyViewModel
+﻿@model PropertyViewModel
 @inject SignInManager<ApplicationUser> signInManager
 
 @{
@@ -45,16 +45,16 @@ else
             @Html.DisplayFor(model => model.Property.Price)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Property.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Property.Description)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Property.Summary)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Property.Summary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Property.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Property.Description)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Property.NumberOfRooms)
@@ -90,9 +90,7 @@ else
             @Html.DisplayNameFor(model => model.Property.MapUrl)
         </dt>
         <dd class="col-sm-10">
-
             <iframe src="@Model.Property.MapUrl" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Property.PublishingDate)
@@ -107,10 +105,14 @@ else
             @Html.DisplayFor(model => model.Property.ViewingDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adress)
+            @Html.DisplayNameFor(model => model.Property.Address)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adress.City)
+            @Html.DisplayFor(model => model.Property.Address.Street)
+            @Html.DisplayFor(model => model.Property.Address.StreetNumber),
+            @Html.DisplayFor(model => model.Property.Address.PostalCode)
+            @Html.DisplayFor(model => model.Property.Address.City),
+            @Html.DisplayFor(model => model.Property.Address.Country)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Property.PropertyType)

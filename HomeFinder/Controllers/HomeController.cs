@@ -27,7 +27,7 @@ namespace HomeFinder.Controllers
         public IActionResult Index()
         {
             HomeViewModel homeViewModel = new();
-            var properties = _context.Properties.Include(p => p.Adress).Include(p => p.Tenure).Include(p => p.PropertyType).ToList();
+            var properties = _context.Properties.Include(p => p.Address).Include(p => p.Tenure).Include(p => p.PropertyType).ToList();
             var sortPropViews = properties.OrderByDescending(p => p.NumberOfViews).ToList();
             var sortPropSize = properties.OrderByDescending(p => p.BuildingArea + p.BeeArea).ToList();
             var sortPrice = properties.OrderByDescending(p => p.Price).ToList();

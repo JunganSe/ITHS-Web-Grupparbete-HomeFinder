@@ -16,7 +16,7 @@ namespace HomeFinder.Data
         public DbSet<SaleStatus> SaleStatuses { get; set; }
         public DbSet<Tenure> Tenures { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
-        public DbSet<Adress> Adresses { get; set; }
+        public DbSet<Address> Adresses { get; set; }
         public DbSet<ExpressionOfInterest> ExpressionOfInterests { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Property> Properties { get; set; }

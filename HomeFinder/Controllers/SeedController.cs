@@ -182,9 +182,9 @@ namespace HomeFinder.Controllers
 
         private async Task SeedAdressesAsync()
         {
-            List<Adress> adresses = new()
+            List<Address> adresses = new()
             {
-                new Adress()
+                new Address()
                 {
                     Street = "Testvägen",
                     StreetNumber = 2,
@@ -192,7 +192,7 @@ namespace HomeFinder.Controllers
                     City = "Testtown",
                     Country = "Testland"
                 },
-                new Adress()
+                new Address()
                 {
                     Street = "Provgatan",
                     StreetNumber = 4,
@@ -200,7 +200,7 @@ namespace HomeFinder.Controllers
                     City = "Provtown",
                     Country = "Provland"
                 },
-                new Adress()
+                new Address()
                 {
                     Street = "Getvägen",
                     StreetNumber = 21,
@@ -208,7 +208,7 @@ namespace HomeFinder.Controllers
                     City = "Jönköping",
                     Country = "Sverige"
                 },
-                new Adress()
+                new Address()
                 {
                     Street = "Vegen",
                     StreetNumber = 41,
@@ -216,7 +216,7 @@ namespace HomeFinder.Controllers
                     City = "Køpenhavn",
                     Country = "Dnmark"
                 },
-                new Adress()
+                new Address()
                 {
                     Street = "Kyrkan",
                     StreetNumber = 22,
@@ -224,7 +224,7 @@ namespace HomeFinder.Controllers
                     City = "Vedum",
                     Country = "Sverige"
                 },
-                new Adress()
+                new Address()
                 {
                     Street = "Hajvägen",
                     StreetNumber = 451,
@@ -253,7 +253,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(1),
+                    Address = await _context.Adresses.FindAsync(1),
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
@@ -273,7 +273,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(2),
+                    Address = await _context.Adresses.FindAsync(2),
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
@@ -293,7 +293,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(3),
+                    Address = await _context.Adresses.FindAsync(3),
                     PropertyType = await _context.PropertyTypes.FindAsync(6),
                     Tenure = await _context.Tenures.FindAsync(1),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
@@ -312,7 +312,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5869471.5021478925!2d58.41210746720272!3d42.32264009498601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x995de1c8a9bc792d!2zNDLCsDIwJzQ0LjAiTiA2MsKwMzInNDkuMiJF!5e0!3m2!1sen!2sse!4v1648042744494!5m2!1sen!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(4),
+                    Address = await _context.Adresses.FindAsync(4),
                     PropertyType = await _context.PropertyTypes.FindAsync(2),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(3),
@@ -332,7 +332,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8423.50112108746!2d12.976587394679703!3d58.14223879867664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465ac893468b1733%3A0xb2b98809eb817ad9!2s534%2061%20Bitterna!5e0!3m2!1ssv!2sse!4v1649322794451!5m2!1ssv!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(5),
+                    Address = await _context.Adresses.FindAsync(5),
                     PropertyType = await _context.PropertyTypes.FindAsync(5),
                     Tenure = await _context.Tenures.FindAsync(2),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),
@@ -351,7 +351,7 @@ namespace HomeFinder.Controllers
                     MapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19032257.77307806!2d-3.9812940566744657!3d54.38748127492599!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x45daaf37376e3d75%3A0x35cbf09316b8d2eb!2sTreriksr%C3%B6set!5e0!3m2!1ssv!2sse!4v1649323194113!5m2!1ssv!2sse",
                     PublishingDate = DateTime.Now,
                     ViewingDate = DateTime.Now,
-                    Adress = await _context.Adresses.FindAsync(6),
+                    Address = await _context.Adresses.FindAsync(6),
                     PropertyType = await _context.PropertyTypes.FindAsync(5),
                     Tenure = await _context.Tenures.FindAsync(3),
                     SaleStatus = await _context.SaleStatuses.FindAsync(2),

@@ -56,8 +56,8 @@ namespace HomeFinder.Models
 
 
         // Foreign keys
-        public int AdressId { get; set; }
-        public Adress Adress { get; set; } // 1 to 1
+        public int AddressId { get; set; }
+        public Address Address { get; set; } // 1 to 1
 
         public int PropertyTypeId { get; set; }
         public PropertyType PropertyType { get; set; } // 1 to many

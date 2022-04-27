@@ -24,14 +24,14 @@ namespace HomeFinder.Controllers
             string country, int minPrice, int maxPrice, int selectedTenureType)
         {
             FilterViewModel filterViewModel = new();
-            var properties = _context.Properties.Include(p => p.Adress).ToList();
+            var properties = _context.Properties.Include(p => p.Address).ToList();
             var propertyTypes = _context.PropertyTypes.Select(pt => pt).ToList();
             var tenures = _context.Tenures.Select(t => t).ToList();
             filterViewModel.Tenures = tenures;
             filterViewModel.PropertyTypes = propertyTypes;
             if (!string.IsNullOrEmpty(city))
             {
-                properties = properties.Where(p => p.Adress.City.Contains(city)).ToList();
+                properties = properties.Where(p => p.Address.City.Contains(city)).ToList();
 
             }
             if (minRooms != 0)
@@ -48,13 +48,13 @@ namespace HomeFinder.Controllers
             if (!string.IsNullOrEmpty(zipCode))
             {
 
-                properties = properties.Where(p => p.Adress.PostalCode == zipCode).ToList();
+                properties = properties.Where(p => p.Address.PostalCode == zipCode).ToList();
 
             }
             if (!string.IsNullOrEmpty(country))
             {
 
-                properties = properties.Where(p => p.Adress.Country == country).ToList();
+                properties = properties.Where(p => p.Address.Country == country).ToList();
 
             }
             if (selectedPropertyType != 0)

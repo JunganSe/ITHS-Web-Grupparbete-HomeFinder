@@ -134,7 +134,7 @@ namespace HomeFinder.Controllers
 
                 // Hämta alla properties vars id finns i propertyIds-listan.
                 Properties = _context.Properties
-                    .Include(p => p.Adress)
+                    .Include(p => p.Address)
                     .ToList()
                     .FindAll(p => propertyIds
                         .Contains(p.Id))

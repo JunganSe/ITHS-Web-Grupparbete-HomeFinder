@@ -23,14 +23,14 @@ namespace HomeFinder.Controllers
 
         // GET: api/AdressAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Adress>>> GetAdresses()
+        public async Task<ActionResult<IEnumerable<Address>>> GetAdresses()
         {
             return await _context.Adresses.ToListAsync();
         }
 
         // GET: api/AdressAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Adress>> GetAdress(int id)
+        public async Task<ActionResult<Address>> GetAdress(int id)
         {
             var adress = await _context.Adresses.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace HomeFinder.Controllers
         // PUT: api/AdressAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdress(int id, Adress adress)
+        public async Task<IActionResult> PutAdress(int id, Address adress)
         {
             if (id != adress.Id)
             {
@@ -76,7 +76,7 @@ namespace HomeFinder.Controllers
         // POST: api/AdressAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Adress>> PostAdress(Adress adress)
+        public async Task<ActionResult<Address>> PostAdress(Address adress)
         {
             _context.Adresses.Add(adress);
             await _context.SaveChangesAsync();

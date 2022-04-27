@@ -8,7 +8,7 @@ namespace HomeFinder.ViewModels
     {
         public Property Property { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public Adress Adress { get; set; }
+        public Address Address { get; set; }
         public List<SaleStatus> SaleStatuses { get; set; } = new();
         public List<Tenure> Tenures { get; set; } = new();
         public List<PropertyType> PropertyTypes { get; set; } = new();
