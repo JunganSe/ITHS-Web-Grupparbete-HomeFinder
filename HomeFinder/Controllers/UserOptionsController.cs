@@ -102,14 +102,14 @@ namespace HomeFinder.Controllers
 
 
 
-        // GET: /UserController/ManageExpressionOfInterests
+        // GET: /UserOptions/DisplayExpressionOfInterests
         [HttpGet]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> DisplayExpressionOfInterests()
         {
             var user = await _userManager.GetUserAsync(User);
 
-            // Troligtvis överkomplicerat sätt att hämta möjliga värden för SaleStatus ur databasen och skicka dem till view i en dictionary.
+            // Troligtvis överkomplicerat sätt att hämta möjliga värden för SaleStatus ur databasen för att kunna filtrera properties.
             var ids = _context.SaleStatuses
                 .Select(s => s.Id)
                 .ToList();
