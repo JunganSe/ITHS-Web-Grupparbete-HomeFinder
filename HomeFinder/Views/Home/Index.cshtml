@@ -8,158 +8,40 @@
 @if (signInManager.IsSignedIn(User))
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome @User.Identity.Name</h1>
+        <h2 class="display-4">Welcome, @User.Identity.Name</h2>
         <p>You are signed in, dude.</p>
     </div>
 }
 else
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
+        <h2 class="display-4">Welcome, random stranger</h2>
+        <p>Would you like to buy some.... properties?</p>
     </div>
 }
+<hr />
 
-<div class="bigsearchbtn">
+<div class="text-center">
     <a class="btn btn-primary" asp-controller="Filter" asp-action="Search">Search for your dream goathome of your dreams HERE</a>
+    <hr />
 </div>
 
 <div>
     <h4>Top Viewed Houses</h4>
-</div>
-<div class="row">
-    @foreach (var p in Model.Top3Viewed)
-    {
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="card my-3">
-
-                <div class="card-header">
-                    @{
-                        List<Image> images = Model.Images;
-                        var image = images.Find(i => i.PropertyId == p.Id);
-                        if (image != null)
-                        {
-                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                        }
-                        else
-                        {
-                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                        }
-                    }
-                </div>
-
-                <div class="card-body">
-                    <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                    <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
-                    <p class="card-text">
-                        Summary: @p.Summary<br>
-                        Number of Rooms: @p.NumberOfRooms<br>
-                        Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
-                        Plot Area: @p.PlotArea<br>
-                        Type: @p.PropertyType.Description<br>
-                        Tenure: @p.Tenure.Description<br>
-                        Price: @Math.Round(p.Price)<br>
-                    </p>
-                </div>
-
-                <div class="card-footer">
-                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
-                </div>
-
-            </div>
-        </div>
-    }
+    @{ Model.Properties = Model.Top3Viewed; }
+    <partial name="_ListPropertiesPartial" />
+    <hr />
 </div>
 
 <div>
     <h4>Thiccest Houses</h4>
-</div>
-<div class="row">
-    @foreach (var p in Model.Top3Size)
-    {
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="card my-3">
-
-                <div class="card-header">
-                    @{
-                        List<Image> images = Model.Images;
-                        var image = images.Find(i => i.PropertyId == p.Id);
-                        if (image != null)
-                        {
-                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                        }
-                        else
-                        {
-                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                        }
-                    }
-                </div>
-
-                <div class="card-body">
-                    <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                    <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
-                    <p class="card-text">
-                        Summary: @p.Summary<br>
-                        Number of Rooms: @p.NumberOfRooms<br>
-                        Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
-                        Plot Area: @p.PlotArea<br>
-                        Type: @p.PropertyType.Description<br>
-                        Tenure: @p.Tenure.Description<br>
-                        Price: @Math.Round(p.Price)<br>
-                    </p>
-                </div>
-
-                <div class="card-footer">
-                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
-                </div>
-
-            </div>
-        </div>
-    }
+    @{ Model.Properties = Model.Top3Size; }
+    <partial name="_ListPropertiesPartial" />
+    <hr />
 </div>
 
 <div>
     <h4>$$$ Houses</h4>
-</div>
-<div class="row">
-    @foreach (Property p in Model.Top3Price)
-    {
-        <div class="col-12 col-md-6 col-xl-4">
-            <div class="card my-3">
-
-                <div class="card-header">
-                    @{
-                        List<Image> images = Model.Images;
-                        var image = images.Find(i => i.PropertyId == p.Id);
-                        if (image != null)
-                        {
-                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                        }
-                        else
-                        {
-                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                        }
-                    }
-                </div>
-
-                <div class="card-body">
-                    <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                    <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
-                    <p class="card-text">
-                        Summary: @p.Summary<br>
-                        Number of Rooms: @p.NumberOfRooms<br>
-                        Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
-                        Plot Area: @p.PlotArea<br>
-                        Type: @p.PropertyType.Description<br>
-                        Tenure: @p.Tenure.Description<br>
-                        Price: @Math.Round(p.Price)<br>
-                    </p>
-                </div>
-
-                <div class="card-footer">
-                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
-                </div>
-
-            </div>
-        </div>
-    }
+    @{ Model.Properties = Model.Top3Price; }
+    <partial name="_ListPropertiesPartial" />
 </div>
