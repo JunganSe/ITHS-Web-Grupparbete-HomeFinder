@@ -91,16 +91,17 @@
             <div class="form-group">
                 <label asp-for="Property.PropertyTypeId" class="control-label"></label>
                 <select asp-for="Property.PropertyTypeId" class="form-control">
+                    <option value="" selected disabled hidden>-- Choose property type --</option>
                     @for (int i = 0; i < Model.PropertyTypes.Count; i++)
                     {
-                        // TODO: Gör så att det krävs att man väljer något i rullgardinerna, annars blir det krash.
                         <option value="@Model.PropertyTypes[i].Id">@Model.PropertyTypes[i].Description</option>
                     }
                 </select>
             </div>
             <div class="form-group">
-                    
+                <label asp-for="Property.TenureId" class="control-label"></label>    
                 <select asp-for="Property.TenureId" class="form-control">
+                    <option value="" selected disabled hidden>-- Choose tenure type --</option>
                     @for (int i = 0; i < Model.Tenures.Count; i++)
                     {
                         <option value="@Model.Tenures[i].Id">@Model.Tenures[i].Description</option>
@@ -110,6 +111,7 @@
             <div class="form-group">
                 <label asp-for="Property.SaleStatusId" class="control-label"></label>
                 <select asp-for="Property.SaleStatusId" class="form-control">
+                    <option value="" selected disabled hidden>-- Choose sale status --</option>
                     @for (int i = 0; i < Model.SaleStatuses.Count; i++)
                     {
                         <option value="@Model.SaleStatuses[i].Id">@Model.SaleStatuses[i].Description</option>
@@ -119,9 +121,13 @@
             <div class="form-group">
                 <label asp-for="Property.EstateAgentId" class="control-label"></label>
                 <select asp-for="Property.EstateAgentId" class="form-control">
+                    <option value="" selected disabled hidden>-- Choose sale status --</option>
                     @for (int i = 0; i < Model.EstateAgents.Count; i++)
                     {
-                        <option value="@Model.EstateAgents[i].Id">@Model.EstateAgents[i].FirstName @Model.EstateAgents[i].LastName</option>
+                        if (Model.EstateAgents[i].UserName == User.Identity.Name)
+                        {
+                            <option value="@Model.EstateAgents[i].Id">@Model.EstateAgents[i].FirstName @Model.EstateAgents[i].LastName</option>
+                        }  
                     }
                 </select>
             </div>
@@ -156,6 +162,6 @@
             });
         });
     </script>
+    <partial name="_ValidationScriptsPartial" />
 
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
