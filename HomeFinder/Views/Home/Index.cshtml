@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if(signInManager.IsSignedIn(User))
+@if (signInManager.IsSignedIn(User))
 {
     <div class="text-center">
         <h1 class="display-4">Welcome @User.Identity.Name</h1>
@@ -15,105 +15,107 @@
 else
 {
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>       
+        <h1 class="display-4">Welcome</h1>
     </div>
 }
+
 <div class="bigsearchbtn">
-<a class="btn btn-primary" asp-controller="Filter" asp-action="Search">Search for your dream goathome of your dreams HERE</a>
+    <a class="btn btn-primary" asp-controller="Filter" asp-action="Search">Search for your dream goathome of your dreams HERE</a>
 </div>
+
 <div>
     <h4>Top Viewed Houses</h4>
 </div>
 <div class="row">
-        @foreach (var p in Model.Top3Viewed)
-        {
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card my-3">
+    @foreach (var p in Model.Top3Viewed)
+    {
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card my-3">
 
-                    <div class="card-header">
+                <div class="card-header">
                     @{
                         List<Image> images = Model.Images;
                         var image = images.Find(i => i.PropertyId == p.Id);
-                            if (image != null)
-                            {
-                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                            }
-                            else
-                            {
-                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                            }
+                        if (image != null)
+                        {
+                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
                         }
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                        <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
-                        <p class="card-text">
-                            Summary: @p.Summary<br>
-                            Number of Rooms: @p.NumberOfRooms<br>
-                            Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
-                            Plot Area: @p.PlotArea<br>
-                            Type: @p.PropertyType.Description<br>
-                            Tenure: @p.Tenure.Description<br>
-                            Price: @Math.Round(p.Price)<br>
-                        </p>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
-                    </div>
-
+                        else
+                        {
+                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                        }
+                    }
                 </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
+                    <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
+                    <p class="card-text">
+                        Summary: @p.Summary<br>
+                        Number of Rooms: @p.NumberOfRooms<br>
+                        Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
+                        Plot Area: @p.PlotArea<br>
+                        Type: @p.PropertyType.Description<br>
+                        Tenure: @p.Tenure.Description<br>
+                        Price: @Math.Round(p.Price)<br>
+                    </p>
+                </div>
+
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
+                </div>
+
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 <div>
     <h4>Thiccest Houses</h4>
 </div>
 <div class="row">
-        @foreach (var p in Model.Top3Size)
-        {            
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card my-3">
+    @foreach (var p in Model.Top3Size)
+    {
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card my-3">
 
-                    <div class="card-header">
+                <div class="card-header">
                     @{
                         List<Image> images = Model.Images;
                         var image = images.Find(i => i.PropertyId == p.Id);
-                            if (image != null)
-                            {
-                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                            }
-                            else
-                            {
-                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                            }
+                        if (image != null)
+                        {
+                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
                         }
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
-                        <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
-                        <p class="card-text">
-                            Summary: @p.Summary<br>
-                            Number of Rooms: @p.NumberOfRooms<br>
-                            Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
-                            Plot Area: @p.PlotArea<br>
-                            Type: @p.PropertyType.Description<br>
-                            Tenure: @p.Tenure.Description<br>
-                            Price: @Math.Round(p.Price)<br>
-                        </p>
-                    </div>
-                    
-                    <div class="card-footer">
-                        <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
-                    </div>
-
+                        else
+                        {
+                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                        }
+                    }
                 </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
+                    <h6 class="card-subtitle">@p.Address.PostalCode @p.Address.City, @p.Address.Country</h6>
+                    <p class="card-text">
+                        Summary: @p.Summary<br>
+                        Number of Rooms: @p.NumberOfRooms<br>
+                        Area: @(p.BuildingArea + p.BeeArea)    (@p.BuildingArea + @p.BeeArea)<br>
+                        Plot Area: @p.PlotArea<br>
+                        Type: @p.PropertyType.Description<br>
+                        Tenure: @p.Tenure.Description<br>
+                        Price: @Math.Round(p.Price)<br>
+                    </p>
+                </div>
+
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-controller="Properties" asp-action="Details" asp-route-returnUrl="@Context.Request.Path" asp-route-id="@p.Id">Details</a>
+                </div>
+
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 <div>
     <h4>$$$ Houses</h4>
@@ -128,16 +130,16 @@ else
                     @{
                         List<Image> images = Model.Images;
                         var image = images.Find(i => i.PropertyId == p.Id);
-                            if (image != null)
-                            {
-                                <img src="@(image.Url)" alt="Image of property" style="width:100%">
-                            }
-                            else
-                            {
-                                <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
-                            }
+                        if (image != null)
+                        {
+                            <img src="@(image.Url)" alt="Image of property" style="width:100%">
                         }
-                    </div>
+                        else
+                        {
+                            <img src="~/images/properties/default/bootyfulhouse.png" alt="Dummy image of property" style="width:100%">
+                        }
+                    }
+                </div>
 
                 <div class="card-body">
                     <h5 class="card-title">@p.Address.Street @p.Address.StreetNumber</h5>
