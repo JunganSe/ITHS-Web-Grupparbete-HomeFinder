@@ -23,8 +23,7 @@ namespace WebAPI.Repositories
             _userManager = userManager;
         }
 
-
-        public async Task CreateAccountAsync(PostAccountViewModel model)
+        public async Task<bool> CreateAccountAsync(PostAccountViewModel model)
         {
 
             var user = new ApplicationUser()
@@ -40,13 +39,33 @@ namespace WebAPI.Repositories
             {
                 await _userManager.AddToRoleAsync(user, "User");
                 await _signInManager.SignInAsync(user, false);
+                return true;
             }
             else // Om det inte gick att skapa användaren:
             {
-                throw new Exception("Det gick inte att skapa användaren");
+                return false;
             }
         }
+
+        public Task<bool> ExternalLogin(string provider, string returnUrl)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ExternalLoginCallback(string returnurl = null, string remoteError = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> LoginAsync(LoginViewModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Logout()
+        {
+            throw new NotImplementedException();
+        }
+
     }
-
-
-}
+    }
