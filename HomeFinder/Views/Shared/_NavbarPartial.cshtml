@@ -49,7 +49,7 @@
                         {
                             <a class="dropdown-item" asp-controller="Properties" asp-action="Index" >
 
-                            //TODO: Byta ut detta!
+                            @*TODO: Byta ut detta!*@
                             <asp-route-userid="@_context.ApplicationUsers.FirstOrDefault(u=>u.UserName == User.Identity.Name).Id">
                                 My properties
                             </a>
