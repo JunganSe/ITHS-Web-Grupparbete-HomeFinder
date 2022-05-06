@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HomeFinder.Models
+namespace WebAPI.Models
 {
     public class Address
     {

@@ -1,4 +1,4 @@
-﻿namespace HomeFinder.Models
+﻿namespace WebAPI.Models
 {
     public class ExpressionOfInterest
     {

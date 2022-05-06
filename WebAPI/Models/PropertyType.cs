@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeFinder.Models
+namespace WebAPI.Models
 {
     public class PropertyType
     {

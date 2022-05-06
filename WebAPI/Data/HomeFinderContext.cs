@@ -1,9 +1,10 @@
-﻿using HomeFinder.Models;
+﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using WebAPI.Models;
 
-namespace HomeFinder.Data
+namespace WebAPI.Data
 {
     public class HomeFinderContext : IdentityDbContext<ApplicationUser>
     {
